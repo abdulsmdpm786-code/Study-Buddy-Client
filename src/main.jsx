@@ -4,10 +4,25 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import Dashboard from './components/Dashboard.jsx'
+import HomePage from './components/Pages/HomePage.jsx'
+import SignUp from './components/Pages/SignUp.jsx'
+import SignIn from './components/Pages/SignIn.jsx'
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <HomePage /> 
+  },
+  {
+    path: "/SignUp",
+    element: <SignUp /> 
+  },
+  {
+    path: "/SignIn",
+    element: <SignIn /> 
+  },
+  {
+    path: "/Dashboard",
     element: <App />,
     children: [
       {
