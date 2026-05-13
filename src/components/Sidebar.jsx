@@ -7,10 +7,28 @@ import {
   FaClipboardQuestion, 
   FaSpellCheck, 
   FaFileSignature,
-  FaXmark
+  FaXmark,
+  FaArrowRightToBracket 
 } from 'react-icons/fa6';
+import AXIOS_API from '../Api/api';
+import { useNavigate  } from 'react-router-dom';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
+
+  const navigate = useNavigate()
+
+  const handleLogOut = async()=>{
+    try {
+      const loggedOutRes = await AXIOS_API.post("/api/v1/user/logOut")
+      if(loggedOutRes.status === 200){
+        console.log("Log out successful", loggedOutRes);
+        navigate("/", {replace: true})
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
   return (
     <aside className={`w-[280px] md:w-[260px] bg-white/85 md:bg-glass backdrop-blur-xl border-r border-glass-border py-8 flex flex-col shadow-[5px_0_25px_rgba(0,0,0,0.02)] z-30 fixed md:sticky top-0 h-screen transition-all duration-300 ${isOpen ? 'left-0' : '-left-[100%] md:left-0'}`}>
       <div className="flex items-center gap-2.5 mx-4 mb-8 p-3.5 bg-white/70 rounded-xl shadow-sm border border-white/80">
@@ -44,6 +62,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         <a href="#" className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300 hover:bg-white/60 hover:text-primary hover:translate-x-1">
           <FaFileSignature className="text-lg min-w-[24px]" />
           <span>Text Editor</span>
+        </a>
+        <a 
+        onClick={handleLogOut}
+        href="#" className="flex items-center px-5 py-3.5 gap-4 bg-rose-700 text-white font-semibold rounded-xl transition-all
+         duration-300 hover:bg-rose-800 hover:translate-x-1">
+          <FaArrowRightToBracket className="text-lg min-w-[24px]" />
+          <span>Log Out</span>
         </a>
       </nav>
     </aside>

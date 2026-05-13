@@ -7,10 +7,14 @@ import {
   FaNoteSticky,
   FaMedal,
 } from "react-icons/fa6";
+import { useAuth } from "../Auth/AuthContext";
 
 const Dashboard = () => {
   const [time, setTime] = useState(0);
   const [isActive, setIsActive] = useState(false);
+  const {user} = useAuth()
+  console.log("user from Dashboard...", user);
+  
 
   useEffect(() => {
     let interval = null;
@@ -63,12 +67,12 @@ const Dashboard = () => {
           animationDelay: "0.1s",
         }}
       >
-        <div className="max-w-full md:max-w-[60%] z-10 relative">
+        <div className="max-w-full md:max-w-[65%] z-10 relative">
           <p className="text-sm text-white/80 mb-3 font-medium uppercase tracking-wide">
             {currentDate}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold mb-5 leading-tight text-white drop-shadow-md">
-            Welcome Abdul Samad PM
+            Welcome {user?.name}
           </h2>
           <p className="text-[1.05rem] text-white/90 italic font-light">
             "In order to be irreplaceable one must always be different."

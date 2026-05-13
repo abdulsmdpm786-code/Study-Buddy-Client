@@ -52,6 +52,7 @@ const Home = () => {
         </nav>
       </div>
 
+
       {/* Hero Section */}
       <main className="flex-1 flex items-center justify-center p-6 md:p-12 relative z-10">
         <div className="max-w-6xl w-full grid md:grid-cols-2 gap-16 items-center">
@@ -70,7 +71,7 @@ const Home = () => {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600">Potential</span>
             </h1>
             
-            <p className="text-xl text-slate-600 mb-10 leading-relaxed font-medium max-w-lg">
+            <p className="text-base text-slate-600 mb-10 leading-relaxed font-medium max-w-lg">
               Access your personalized student dashboard to track assignments, view course progress, and elevate your academic journey. Everything you need, beautifully organized in one place.
             </p>
             

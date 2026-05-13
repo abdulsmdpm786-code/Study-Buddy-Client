@@ -7,6 +7,8 @@ import Dashboard from './components/Dashboard.jsx'
 import HomePage from './components/Pages/HomePage.jsx'
 import SignUp from './components/Pages/SignUp.jsx'
 import SignIn from './components/Pages/SignIn.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
+import { AuthProvider } from './Auth/AuthContext.jsx'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,9 @@ const router = createBrowserRouter([
     element: <SignIn /> 
   },
   {
+    element: <ProtectedRoute />,
+    children:[
+    {
     path: "/Dashboard",
     element: <App />,
     children: [
@@ -31,10 +36,12 @@ const router = createBrowserRouter([
       }
     ]
   }
+]
+  }
 ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
 )
