@@ -9,6 +9,7 @@ import SignUp from './components/Pages/SignUp.jsx'
 import SignIn from './components/Pages/SignIn.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import { AuthProvider } from './Auth/AuthContext.jsx'
+import CoursePage from './components/Pages/Courses/CoursePage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,11 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />
-      }
+      },
+  {
+    path: "Course",
+    element: <CoursePage /> 
+  }
     ]
   }
 ]

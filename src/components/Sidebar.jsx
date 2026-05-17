@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fa6';
 import AXIOS_API from '../Api/api';
 import { useNavigate  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
 
@@ -39,7 +40,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </button>
       </div>
       <nav className="flex flex-col gap-1.5 px-4">
-        <a href="#" className="flex items-center px-5 py-3.5 gap-4 font-semibold rounded-xl transition-all duration-300 bg-primary text-white shadow-[0_4px_15px_rgba(79,70,229,0.3)] hover:-translate-y-0.5">
+        <a href="#" className="flex items-center px-5 py-3.5 gap-4 font-semibold rounded-xl transition-all duration-300
+         bg-primary text-white shadow-[0_4px_15px_rgba(79,70,229,0.3)] hover:-translate-y-0.5">
           <FaTableColumns className="text-lg min-w-[24px]" />
           <span>Dashboard</span>
         </a>
@@ -47,10 +49,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           <FaListCheck className="text-lg min-w-[24px]" />
           <span>Tasks</span>
         </a>
-        <a href="#" className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300 hover:bg-white/60 hover:text-primary hover:translate-x-1">
+
+       <Link to={"Course"} className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all 
+         duration-300 hover:bg-white/60 hover:text-primary hover:translate-x-1">
           <FaBookOpen className="text-lg min-w-[24px]" />
           <span>Courses</span>
-        </a>
+       
+       </Link>
+       
         <a href="#" className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300 hover:bg-white/60 hover:text-primary hover:translate-x-1">
           <FaClipboardQuestion className="text-lg min-w-[24px]" />
           <span>Quiz</span>
