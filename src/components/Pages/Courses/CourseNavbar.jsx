@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import { FaPlus, FaBars } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import AddModal from "./addModal";
+import { useAuth } from "../../../Auth/AuthContext";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModal, setIsModal] = useState(false);
+
+  const { user, isLoading } = useAuth();
+
+  const isAdmin = user?.role === "admin";
 
   const handleAdd = () => {
     setIsModal(true);
@@ -22,7 +27,7 @@ function Navbar() {
           className="w-full max-w-4xl bg-white/40 backdrop-blur-xl border border-white/50 shadow-lg rounded-full
  px-6 py-3 flex justify-between items-center transition-all duration-300 relative"
         >
-          <div>
+         {isAdmin && <div>
             <div
               onClick={() => handleAdd()}
               className="w-36 p-2 h-10 bg-indigo-700 hover:bg-indigo-800 rounded-lg flex items-center justify-center gap-2 cursor-default"
@@ -30,7 +35,7 @@ function Navbar() {
               <FaPlus className="text-white text-base" />
               <h1 className="text-white text-base">Add Course</h1>
             </div>
-          </div>
+          </div>}
 
           {/* Desktop Menu */}
           <div className="hidden md:flex gap-8 items-center bg-white/40 px-6 py-2 rounded-full border border-white/50 shadow-inner">
@@ -110,9 +115,7 @@ function Navbar() {
           </div>
         </nav>
       </div>
-      { isModal && <AddModal 
-      onClose={()=>setIsModal(false)}
-      />}
+      {isModal && <AddModal onClose={() => setIsModal(false)} />}
     </div>
   );
 }

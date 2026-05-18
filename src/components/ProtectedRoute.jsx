@@ -10,10 +10,6 @@ export default function ProtectedRoute() {
     console.log("this is user",user);
     
 
-
-
- 
-
     if(isLoading){
         return <div className="flex-1 flex flex-col items-center justify-center py-20">
           <div className="relative">

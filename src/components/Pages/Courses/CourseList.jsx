@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import AXIOS_API from "../../../Api/api";
 import { useAuth } from "../../../Auth/AuthContext";
 import CourseModal from "./CourseModal";
+import { useNavigate } from "react-router-dom";
 
 function CourseList() {
   const [data, setData] = useState([]);
   const [isModal, setIsModal] = useState(false);
   const [editCourse, setEditCourse] = useState("")
+  const navigate = useNavigate()
 
   const { user, isLoading } = useAuth();
   console.log("user details", user.role);
@@ -49,6 +51,12 @@ function CourseList() {
       setEditCourse(course)
     setIsModal(!isModal);
   };
+
+  const handleRoute = (id)=>{
+    navigate(`/Dashboard/course/${id}`)
+
+  } 
+
 
   return (
     <div>
@@ -184,25 +192,14 @@ function CourseList() {
 
                 {/* Action Button */}
                 <button
+                onClick={()=> handleRoute(data._id)}
                   type="button"
                   className="w-full mt-auto flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 
                 text-center text-sm font-semibold text-white shadow-sm shadow-indigo-200 hover:bg-indigo-700 active:scale-[0.98]
                  focus:outline-none focus:ring-4 focus:ring-indigo-100 transition-all duration-200"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                    />
-                  </svg>
-                  Add to cart
+                  
+                  Learn More
                 </button>
               </div>
             </div>
