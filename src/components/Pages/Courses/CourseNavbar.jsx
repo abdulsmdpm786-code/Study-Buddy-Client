@@ -1,31 +1,35 @@
 import React, { useState } from "react";
-import {
-  FaGraduationCap,
-  FaArrowRight,
-  FaBars,
-  FaXmark,
-} from "react-icons/fa6";
+import { FaPlus, FaBars } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import AddModal from "./addModal";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isModal, setIsModal] = useState(false);
+
+  const handleAdd = () => {
+    setIsModal(true);
+  };
   return (
     <div>
-      <div className="w-full px-4 pt-4 flex justify-center sticky top-0 z-50 transition-all duration-500 animate-fadeInUp "
-  style={{
-    animationDelay: "0.2s",
-  }}>
+      <div
+        className="w-full px-4 pt-4 flex justify-center sticky top-0 z-50 transition-all duration-500 animate-fadeInUp "
+        style={{
+          animationDelay: "0.2s",
+        }}
+      >
         <nav
           className="w-full max-w-4xl bg-white/40 backdrop-blur-xl border border-white/50 shadow-lg rounded-full
  px-6 py-3 flex justify-between items-center transition-all duration-300 relative"
         >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-purple-500 flex items-center justify-center text-white shadow-lg">
-              <FaGraduationCap className="text-xl" />
+          <div>
+            <div
+              onClick={() => handleAdd()}
+              className="w-36 p-2 h-10 bg-indigo-700 hover:bg-indigo-800 rounded-lg flex items-center justify-center gap-2 cursor-default"
+            >
+              <FaPlus className="text-white text-base" />
+              <h1 className="text-white text-base">Add Course</h1>
             </div>
-            <span className="text-2xl font-extrabold text-primary tracking-tight">
-              Qalam Academy
-            </span>
           </div>
 
           {/* Desktop Menu */}
@@ -95,7 +99,7 @@ function Navbar() {
               >
                 UI/UX Design
               </Link>
-              <Link 
+              <Link
                 to="/about"
                 className="text-slate-600 font-semibold hover:text-primary hover:bg-white/50 px-5 py-3 rounded-xl transition-all"
                 onClick={() => setIsMenuOpen(false)}
@@ -106,6 +110,9 @@ function Navbar() {
           </div>
         </nav>
       </div>
+      { isModal && <AddModal 
+      onClose={()=>setIsModal(false)}
+      />}
     </div>
   );
 }

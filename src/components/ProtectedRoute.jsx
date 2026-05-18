@@ -10,7 +10,7 @@ export default function ProtectedRoute() {
     console.log("this is user",user);
     
 
-    // const Navigate = useNavigate()
+
 
  
 

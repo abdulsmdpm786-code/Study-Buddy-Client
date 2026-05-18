@@ -1,56 +1,58 @@
 import React, { useState } from "react";
 import AXIOS_API from "../../../Api/api";
 
+function AddModal({ onClose }) {
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [duration, setDuration] = useState("");
+  const [shortTitle, setShortTitle] = useState("");
 
-function CourseModal({ onClose, course }) {
-  console.log("from modal...", course);
-
-  const [title, setTitle] = useState(course.title);
-  const [price, setPrice] = useState(course.price);
-  const [duration, setDuration] = useState(course.duration);
-
-  const [imagePreview, setImagePreview] = useState(course.Image);
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
-  const handleImageChange = (e) => {
+    const handleImageChange = (e) => {
+    
     const file = e.target.files[0];
+    console.log("Did I catch a file?", file);
     if (file) {
-      setImagePreview(URL.createObjectURL(file));
       setImageFile(file);
+      const preview = URL.createObjectURL(file);
+      setImagePreview(preview);
     }
   };
 
-const handleSubmit = async () => {
-  const formData = new FormData()
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("shortTitle", shortTitle)
+    formData.append("title", title);
+    formData.append("price", price);
+    formData.append("duration", duration);
+    formData.append("Image", imageFile);
 
-  formData.append("title", title)
-  formData.append("price", price)
-  formData.append("duration", duration)
+    try {
+      const addResponse = await AXIOS_API.post(
+        "/api/v1/course/create",
+        formData,
+      );
 
-  if (imageFile) {
-    formData.append("image", imageFile)  // ← lowercase to match schema
-  }
-
-  try {
-    const editResponse = await AXIOS_API.patch(
-      `/api/v1/course/updateOne/${course._id}`,
-      formData,
-      { withCredentials: true }
-    )
-
-    if (editResponse.status === 200) {
-      alert("updated")
-      onClose()
+      if (addResponse.status === 200) {
+        alert("Course Added");
+        onClose();
+      }
+    } catch (error) {
+      console.error("Failed to Add", error);
     }
-  } catch (error) {
-    console.error("Failed to update", error)
-  }
-}
+  };
+  console.log("image", imageFile);
+
+
 
   return (
     <div className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-
-      <div className="relative w-full max-w-md flex flex-col bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden animate-fadeInUp">
+      <div
+        className="relative w-full max-w-md flex flex-col bg-white rounded-2xl shadow-xl border border-slate-100
+       overflow-hidden animate-fadeInUp"
+      >
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-slate-900">Course details</h3>
@@ -76,13 +78,24 @@ const handleSubmit = async () => {
             </button>
           </div>
 
-          <div >
+          <div>
             <div className="space-y-4">
               <div>
-                <label
-                  className="block text-sm font-semibold text-slate-700 mb-1"
-                  htmlFor="fullName"
-                >
+                <label className="block text-sm font-semibold text-slate-700 mb-1">
+                  Short Title
+                </label>
+                <input
+                  type="text"
+                  value={shortTitle}
+                  onChange={(e) => setShortTitle(e.target.value)}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 
+                  transition-colors"
+                  id="fullName"
+                  autoFocus
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-1">
                   Title
                 </label>
                 <input
@@ -204,4 +217,4 @@ const handleSubmit = async () => {
   );
 }
 
-export default CourseModal;
+export default AddModal;
