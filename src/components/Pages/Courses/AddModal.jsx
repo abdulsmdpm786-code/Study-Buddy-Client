@@ -6,6 +6,8 @@ function AddModal({ onClose }) {
   const [price, setPrice] = useState("");
   const [duration, setDuration] = useState("");
   const [shortTitle, setShortTitle] = useState("");
+  const [description, setDescription] = useState("")
+
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -28,6 +30,7 @@ function AddModal({ onClose }) {
     formData.append("price", price);
     formData.append("duration", duration);
     formData.append("Image", imageFile);
+    formData.append("description", description)
 
     try {
       const addResponse = await AXIOS_API.post(
@@ -109,6 +112,21 @@ function AddModal({ onClose }) {
                 />
               </div>
 
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-1">
+                  Description
+                </label>
+                <input
+                  type="text"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full px-3 py-4 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 
+                  transition-colors"
+                  id="fullName"
+                  autoFocus
+                />
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label
@@ -141,7 +159,11 @@ function AddModal({ onClose }) {
                     id="dateOfBirth"
                   />
                 </div>
+
+                
               </div>
+
+              
 
               <div>
                 <label
