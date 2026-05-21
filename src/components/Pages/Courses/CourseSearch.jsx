@@ -1,7 +1,10 @@
 import React from 'react'
 import { Search } from "lucide-react";
+import { useState } from 'react';
 
-function CourseSearch() {
+function CourseSearch({onSearchInput}) {
+
+  // const [value, setValue] = useState("")
   return (
     <div>
         <div
@@ -18,12 +21,15 @@ function CourseSearch() {
     <p className="text-base mt-2">Build your legacy with Knowledge</p>
     <div className="max-w-xl w-full bg-gray-900 rounded-xl overflow-hidden mt-4">
       <textarea
+      // value={value}
+      onChange={(e)=> onSearchInput(e.target.value)}
         className="w-full p-3 pb-0 resize-none outline-none bg-transparent text-white"
         placeholder="Tell us about your interest..."
-        rows="3"
+        
       ></textarea>
-      <div className="flex justify-end pb-3 px-3">
+      <div className="flex justify-end pb-2 px-3">
         <button
+        // onClick={()=> onSearchInput()}
           className="flex items-center justify-center p-1 rounded size-6 bg-indigo-600 text-white"
           aria-label="Send"
         >

@@ -16,6 +16,7 @@ import AXIOS_API from "../../../Api/api";
 import { useParams } from "react-router-dom";
 import EditModal from "./EditModal";
 import AddModal from "./AddModal";
+import ResourcesContent from "./ResourcesContent";
 
 function MainSection() {
   const { courseContent } = useParams();
@@ -25,6 +26,7 @@ function MainSection() {
   const [isContent, setIsContent] = useState([]);
   const [editModal, setEditModal] = useState(false);
   const [editData, setEditData] = useState("");
+  const [isMessage, setIsMessage] = useState(false)
 
   const [addModal, setAddModal] = useState(false)
 
@@ -49,6 +51,7 @@ function MainSection() {
       if (contentResponse.status === 200) {
         console.log("clear", contentResponse.data.content);
         setIsContent(contentResponse.data.content);
+        setIsMessage(!isMessage)
       }
     } catch (error) {
       console.error(error);
@@ -56,6 +59,8 @@ function MainSection() {
   };
 
   const content = data.find((e) => e._id === courseContent);
+
+  
 
   useEffect(() => {
     getCourse();
@@ -86,6 +91,15 @@ try {
   const openAddModal = ()=>{
     setAddModal(true)
   }
+// console.log("content...",isContent);
+
+  const noteFilter = isContent.filter(n => n.title.type === "note")
+  console.log("notes...",noteFilter);
+
+  const reference = isContent.filter(n => n.title.type === "ref")
+  console.log("ref..",reference);
+  
+  
 
 
   return (
@@ -130,14 +144,15 @@ try {
         </div>
       </section>
 
-      {/* Notes Grid */}
+
       
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 ">
         
-        {isContent.map((note, i) => (
+        {noteFilter.map((note, i) => (
           <div
             key={i}
-            className="bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-md border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-2xl p-5 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1 relative group cursor-pointer transition-all duration-500 animate-fadeInUp"
+            className="bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-md border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-2xl p-5 
+            hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1 relative group cursor-pointer transition-all duration-500 animate-fadeInUp"
             style={{ animationDelay: `0.${i + 1}s` }}
           >
             <div className="flex gap-2 items-start mb-3">
@@ -191,6 +206,8 @@ try {
           </div>
         ))}
       </section>
+
+     <ResourcesContent reference={reference} />
       {editModal && (
         <EditModal onClose={() => setEditModal(false)} data={editData} />
       )}
