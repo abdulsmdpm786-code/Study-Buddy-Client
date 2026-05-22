@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { AuthProvider } from "./Auth/AuthContext.jsx";
 import CoursePage from "./components/Pages/Courses/CoursePage.jsx";
 import CourseContents from "./components/Pages/Contents/CourseContents.jsx";
+import QuizHome from "./components/Pages/Quiz/QuizHome.jsx";
 
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             path: "course/:courseContent",
             element: <CourseContents />,
           },
+          {
+            path: "course/quiz",
+            element: <QuizHome />,
+          }
         ],
       },
     ],
