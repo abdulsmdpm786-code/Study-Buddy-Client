@@ -25,12 +25,12 @@ function CourseList({mapCourse}) {
   //       setData(dataResponse.data.Courses);
   //     }
   //   } catch (error) {
-  //     console.log(error);
+  //     console.log(error);    
   //   }
   // };
-console.log("data for test..",data);
+// console.log("data for test..",data);
 
-  console.log("course for test", mapCourse.Courses);
+//   console.log("course for test", mapCourse.Courses);
   
   // useEffect(() => {
   //   getCourse();
