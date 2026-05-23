@@ -97,7 +97,7 @@ function QuizDiv() {
                 onClick={() => handleQuiz(data.courseId)}
                 className="bg-gray-200 w-full p-2 rounded-lg text-indigo-700 font-bold mt-3 text-center group-hover:bg-white transition-colors"
               >
-                Click Me
+                Start Quiz
               </div>
             </a>
           </div>

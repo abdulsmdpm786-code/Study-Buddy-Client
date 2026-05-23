@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AXIOS_API from "../../../Api/api";
+import QuizTimer from "./QuizTimer";
 
 export default function QuizSection() {
   const [quizContent, setQuizContent] = useState([]);
-  const [quizQuestion, setQuizQuestion] = useState([]);
   const { courseId } = useParams();
+  const [isWarning, setIsWarning] = useState(false);
+  const [isWrong, setIsWrong] = useState(false);
+  const [isAnswer, setIsAnswer] = useState(false);
 
   const handleFetch = async () => {
     try {
@@ -15,52 +18,54 @@ export default function QuizSection() {
 
       if (quizQuestions.status === 200) {
         console.log("quiz questions.....", quizQuestions);
-        setQuizContent(quizQuestions.data.Quiz[0]);
+        setQuizContent(quizQuestions.data.Quiz[0].questions);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-
-  const questionsText = quizContent
-  console.log("content..", quizContent);
-  
-console.log(".....",questionsText?.questions);
-
+  console.log("quiz content..", quizContent);
 
   useEffect(() => {
     handleFetch();
   }, []);
 
-  const questions = [
-    {
-      question: "Which software is mainly used for UI/UX Design?",
-      options: ["Photoshop", "Figma", "Premiere Pro", "After Effects"],
-    },
-    {
-      question: "HTML stands for?",
-      options: [
-        "Hyper Text Markup Language",
-        "High Text Machine Language",
-        "Home Tool Markup Language",
-        "Hyper Tool Machine Language",
-      ],
-    },
-    {
-      question: "Which CSS framework are we using?",
-      options: ["Bootstrap", "Material UI", "Tailwind", "Bulma"],
-    },
-  ];
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  let [currentQuestion, setCurrentQuestion] = useState(0);
   const [selected, setSelected] = useState("");
+  let [score, setScore] = useState(0);
+  const answer = quizContent[currentQuestion]?.answer;
 
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
+  const handleForward = () => {
+    if (selected === "") {
+      return setIsAnswer(!isAnswer);
+    }
+
+    if (selected === answer) {
+      setIsAnswer(!isAnswer);
+      setScore(score + 8);
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      setIsAnswer(!isAnswer);
+      setIsWarning(!isWarning);
+      setIsWrong(!isWrong);
+    }
+  };
+
+  const handleDone = () => {
+    setCurrentQuestion(currentQuestion + 1);
+    setIsWrong(!isWrong);
+    setIsWarning(!isWarning);
+  };
+
+  console.log("selected option...", selected);
+  console.log("current answer...", answer);
+  console.log("score...", score);
+
+  const progress = ((currentQuestion + 1) / quizContent.length) * 100;
 
   return (
     <div className="min-h-screen flex items-center justify-center  relative overflow-hidden ">
-      {/* Main Container - Adjusted max-width for a compact fit */}
       <div className="w-full max-w-3xl relative z-10 flex flex-col items-center">
         {/* Header */}
         <div className="text-center mb-6">
@@ -77,22 +82,30 @@ console.log(".....",questionsText?.questions);
 
         {/* Quiz Card */}
         <div
-          className="w-full backdrop-blur-2xl bg-white/35 border border-white/40 rounded-[24px] px-3 sm:px-4 py-2 
-        shadow-[0_8px_32px_rgba(31,38,135,0.15)]"
+          className="w-full backdrop-blur-2xl bg-white/35 border border-white/40 rounded-[24px] px-3 sm:px-4 py-4 
+        shadow-[0_8px_32px_rgba(31,38,135,0.15)] transition-all duration-300 animate-fadeInUp group h-full mt-5"
+          style={{
+            animationDelay: "0.2s",
+          }}
         >
           {/* Top Status Area */}
           <div className="flex flex-row gap-4 justify-between items-center mb-6">
-            <div className="backdrop-blur-xl bg-white/30 border border-white/40 px-4 py-2 rounded-2xl">
-              <p className="text-xs sm:text-sm text-slate-500">Question</p>
-              <h3 className="font-bold text-base sm:text-lg text-slate-800">
-                {currentQuestion + 1} / {questions.length}
-              </h3>
+            <div className="flex gap-4">
+              <div className="backdrop-blur-xl bg-white/30 border border-white/40 px-4 py-2 rounded-2xl">
+                <p className="text-xs sm:text-sm text-slate-500">Question</p>
+                <h3 className="font-bold text-base sm:text-lg text-slate-800">
+                  {currentQuestion + 1} / {quizContent.length}
+                </h3>
+              </div>
+              <div className="backdrop-blur-xl bg-green-300 border border-white/40 px-6 py-2  rounded-2xl">
+                <p className="text-xs sm:text-sm ">Score</p>
+                <h3 className="font-bold text-base sm:text-lg text-slate-800">
+                  {score} / 80
+                </h3>
+              </div>
             </div>
-
             <div className="backdrop-blur-xl bg-white/30 border border-white/40 px-4 py-2 sm:px-5 sm:py-3 rounded-2xl">
-              <span className="font-semibold text-sm sm:text-base text-purple-700">
-                {Math.round(progress)}%
-              </span>
+              <QuizTimer />
             </div>
           </div>
 
@@ -109,35 +122,65 @@ console.log(".....",questionsText?.questions);
             {/* Question Side (Left) */}
             <div className="flex-1">
               <h2 className="text-xl sm:text-2xl md:text-3xl md:leading-snug font-semibold text-slate-800">
-                {questions[currentQuestion].question}
+                {quizContent[currentQuestion]?.question}
               </h2>
+              {isAnswer && (
+                <div
+                  className="p-6 text-sm text-amber-500 rounded-xl bg-amber-50 font-normal mt-2 transition-all duration-300 animate-fadeInUp group  "
+                  style={{
+                    animationDelay: "0.2s",
+                  }}
+                  role="alert"
+                >
+                  <span className="font-semibold mr-2">Attention</span>
+                  Please Select One Answer
+                </div>
+              )}
+              {isWarning && (
+                <div
+                  className="p-6 text-sm text-amber-500 rounded-xl bg-amber-50 font-normal mt-2 transition-all duration-300 animate-fadeInUp group  "
+                  style={{
+                    animationDelay: "0.2s",
+                  }}
+                  role="alert"
+                >
+                  <span className="font-semibold mr-2">wrong</span>
+                  Answer is: {answer}
+                </div>
+              )}
             </div>
 
-            {/* Options Side (Right) */}
-            <div className="flex-1 flex flex-col gap-3 sm:gap-4">
-              {questions[currentQuestion].options.map((option, index) => (
-                <button
+            <div className="flex flex-1 flex-col gap-3 sm:gap-4">
+              {quizContent[currentQuestion]?.options.map((option, index) => (
+                <div
                   key={index}
-                  onClick={() => setSelected(option)}
-                  className={`p-3 sm:p-4 rounded-2xl backdrop-blur-xl border text-left transition-all ${
-                    selected === option
-                      ? "bg-white/60 border-blue-400 shadow-md"
-                      : "bg-white/25 border-white/40 hover:bg-white/40"
-                  }`}
+                  className="w-full transition-all duration-300 animate-fadeInUp group h-full "
+                  style={{
+                    animationDelay: `0.${index + 1}s`,
+                  }}
                 >
-                  <div className="flex items-center gap-3 sm:gap-4 text-sm sm:text-base text-slate-700 font-medium">
-                    <div
-                      className={`min-w-[2.5rem] h-10 rounded-full flex items-center justify-center font-semibold transition-colors ${
-                        selected === option
-                          ? "bg-blue-500 text-white shadow-sm"
-                          : "bg-white/50 text-slate-600"
-                      }`}
-                    >
-                      {String.fromCharCode(65 + index)}
+                  <button
+                    onClick={() => setSelected(option)}
+                    className={`w-full p-3 sm:p-4 rounded-2xl backdrop-blur-xl border text-left transition-all ${
+                      selected === option
+                        ? "bg-white/60 border-blue-400 shadow-md"
+                        : "bg-white/25 border-white/40 hover:bg-white/40"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 sm:gap-4 text-sm sm:text-base text-slate-700 font-medium">
+                      <div
+                        className={`min-w-[2.5rem] h-10 rounded-full flex items-center justify-center font-semibold transition-colors ${
+                          selected === option
+                            ? "bg-blue-500 text-white shadow-sm"
+                            : "bg-white/50 text-slate-600"
+                        }`}
+                      >
+                        {String.fromCharCode(65 + index)}
+                      </div>
+                      {option}
                     </div>
-                    {option}
-                  </div>
-                </button>
+                  </button>
+                </div>
               ))}
             </div>
           </div>
@@ -145,27 +188,42 @@ console.log(".....",questionsText?.questions);
           {/* Buttons */}
           <div className="flex flex-row gap-4 justify-between mt-8 md:mt-10 pt-4 border-t border-white/30">
             <button
-              disabled={currentQuestion === 0}
-              onClick={() => setCurrentQuestion((prev) => prev - 1)}
+              // disabled={currentQuestion === 0}
+              // onClick={() => }
               className="px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base rounded-2xl bg-white/30 border border-white/40 disabled:opacity-40 hover:bg-white/50 transition-colors text-slate-700 font-medium"
             >
               Previous
             </button>
 
-            <button
-              onClick={() => {
-                if (currentQuestion < questions.length - 1) {
-                  setCurrentQuestion((prev) => prev + 1);
-                  setSelected("");
-                }
-              }}
-              className="px-6 py-2.5 sm:px-8 sm:py-3 text-sm sm:text-base rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium transition-colors shadow-lg shadow-blue-500/20"
-            >
-              {currentQuestion === questions.length - 1 ? "Finish" : "Next →"}
-            </button>
+            {isWrong ? (
+              <button
+                onClick={() => handleDone()}
+                className="text-white bg-brand box-border border text-sm sm:text-base border-transparent bg-indigo-600 rounded-lg focus:ring-4 
+                focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base px-6 py-2.5 focus:outline-none"
+              >
+                {" "}
+                Done
+              </button>
+            ) : (
+              <button
+                onClick={() => handleForward()}
+                className="px-6 py-2.5 sm:px-8 sm:py-3 text-sm sm:text-base rounded-2xl bg-gradient-to-r from-blue-500
+                 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium transition-colors shadow-lg
+                  shadow-blue-500/20"
+              >
+                {currentQuestion === quizContent.length - 1
+                  ? "Finish"
+                  : "Next →"}
+              </button>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+// if (currentQuestion < quizContent.length - 1) {
+//                   setCurrentQuestion((prev) => prev + 1);
+//                   setSelected("");
+//                 }
