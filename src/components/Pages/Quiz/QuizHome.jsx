@@ -7,7 +7,6 @@ function QuizHome() {
       <div className="min-h-screen  p-4 md:p-10 font-sans flex justify-center items-start">
         {/* Main Card */}
         <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-8 items-start">
-
           <div
             className="bg-white/95 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_50px_rgba(100,100,150,0.05)] p-6 sm:p-8 w-full 
         lg:w-[400px] shrink-0 hover:-translate-y-1  cursor-pointer transition-all duration-500 animate-fadeInUp 
@@ -16,7 +15,6 @@ function QuizHome() {
               animationDelay: "0.2s",
             }}
           >
-    
             <div className="mb-8">
               <div className="flex justify-between items-end mb-4">
                 <h2 className="text-[#1A1A32] font-black text-2xl">
@@ -26,14 +24,13 @@ function QuizHome() {
                   50 / 100 XP
                 </span>
               </div>
-          
+
               <div className="h-3 w-full bg-[#F3F1FA] rounded-full overflow-hidden">
                 <div className="h-full bg-gradient-to-r from-indigo-500 to-pink-500 w-1/2 rounded-full"></div>
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-8">
-       
               <div className="bg-[#FCFCFF] border border-indigo-50/50 rounded-2xl py-5 px-2 flex flex-col items-center justify-center gap-2 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +55,6 @@ function QuizHome() {
                 </span>
               </div>
 
-   
               <div className="bg-[#FCFCFF] border border-indigo-50/50 rounded-2xl py-5 px-2 flex flex-col items-center justify-center gap-2 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -112,23 +108,17 @@ function QuizHome() {
               </div>
             </div>
 
-
             <div className="h-px w-full bg-gradient-to-r from-transparent via-indigo-100 to-transparent mb-6"></div>
 
-   
             <div>
               <h3 className="text-indigo-500/80 text-xs font-bold tracking-widest uppercase mb-4">
-                Theme Settings
+                Quiz rules
               </h3>
-              <div className="flex gap-3 h-16">
-                <button className="flex-1 bg-[#FCFCFF] hover:bg-indigo-50 border border-indigo-50/50 transition-colors text-[#1A1A32] font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center shadow-sm">
-                  Pastel Light
-                </button>
-                <button className="flex-1 bg-[#FCFCFF] hover:bg-indigo-50 border border-indigo-50/50 transition-colors text-[#1A1A32] font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center flex-col leading-tight shadow-sm">
-                  <span>Cosmic</span>
-                  <span>Dark</span>
-                </button>
-                <button className="flex-1 bg-[#6C63FF] hover:bg-[#5a52d9] transition-colors rounded-xl shadow-[0_8px_16px_-4px_rgba(108,99,255,0.4)]"></button>
+              <div className="flex gap-3 h-16 overflow-hidden">
+                <h1 className="text-sm  text-gray-600  leading-relaxed ">
+                  This quiz contains 10 MCQ questions and must be completed
+                  within 10 minutes. Each question has one correct answer, A minimum score of 70% is required.
+                </h1>
               </div>
             </div>
           </div>
