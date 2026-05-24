@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AXIOS_API from "../../../Api/api";
 import QuizTimer from "./QuizTimer";
+import QuizPrize from "./QuizPrize";
 
 export default function QuizSection() {
   const [quizContent, setQuizContent] = useState([]);
@@ -9,6 +10,7 @@ export default function QuizSection() {
   const [isWarning, setIsWarning] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
   const [isAnswer, setIsAnswer] = useState(false);
+  const [prizeModal, setPrizeModal] = useState(false)
 
   const handleFetch = async () => {
     try {
@@ -37,8 +39,12 @@ export default function QuizSection() {
   const answer = quizContent[currentQuestion]?.answer;
 
   const handleForward = () => {
-    if (selected === "") {
-      return setIsAnswer(!isAnswer);
+    setIsAnswer(false);
+    setIsWrong(false);
+
+    if (!selected) {
+      setIsAnswer(true);
+      return;
     }
 
     if (selected === answer) {
@@ -46,11 +52,16 @@ export default function QuizSection() {
       setScore(score + 8);
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      setIsAnswer(!isAnswer);
       setIsWarning(!isWarning);
       setIsWrong(!isWrong);
     }
+
+    if (currentQuestion === quizContent.length - 1) {
+      setCurrentQuestion(0);
+      setPrizeModal(true)
+    }
   };
+
 
   const handleDone = () => {
     setCurrentQuestion(currentQuestion + 1);
@@ -126,7 +137,8 @@ export default function QuizSection() {
               </h2>
               {isAnswer && (
                 <div
-                  className="p-6 text-sm text-amber-500 rounded-xl bg-amber-50 font-normal mt-2 transition-all duration-300 animate-fadeInUp group  "
+                  className="p-6 text-sm text-amber-500 rounded-xl bg-amber-50 font-normal mt-2 transition-all duration-300
+                   animate-fadeInUp group  "
                   style={{
                     animationDelay: "0.2s",
                   }}
@@ -138,7 +150,8 @@ export default function QuizSection() {
               )}
               {isWarning && (
                 <div
-                  className="p-6 text-sm text-amber-500 rounded-xl bg-amber-50 font-normal mt-2 transition-all duration-300 animate-fadeInUp group  "
+                  className="p-6 text-sm text-amber-500 rounded-xl bg-amber-50 font-normal mt-2 transition-all duration-300 
+                  animate-fadeInUp group  "
                   style={{
                     animationDelay: "0.2s",
                   }}
@@ -219,6 +232,7 @@ export default function QuizSection() {
           </div>
         </div>
       </div>
+      {prizeModal && <QuizPrize  score={score}/>}
     </div>
   );
 }
