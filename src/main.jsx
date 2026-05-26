@@ -13,6 +13,7 @@ import CoursePage from "./components/Pages/Courses/CoursePage.jsx";
 import CourseContents from "./components/Pages/Contents/CourseContents.jsx";
 import QuizHome from "./components/Pages/Quiz/QuizHome.jsx";
 import QuizSection from "./components/Pages/Quiz/QuizSection.jsx";
+import CreateCourseForm from "./components/Pages/TextEditor/CreateCourseForm.jsx";
 
 
 const router = createBrowserRouter([
@@ -50,12 +51,15 @@ const router = createBrowserRouter([
           {
             path: "course/quiz",
             element: <QuizHome />,
-          }
-          ,
+          },
           {
             path: "course/quiz/:courseId",
             element: <QuizSection />,
-          }
+          },
+          {
+            path: "course/editor",
+            element: <CreateCourseForm />,
+          },
         ],
       },
     ],

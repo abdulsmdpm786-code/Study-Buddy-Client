@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import QuizDiv from "./QuizDiv";
+import { useAuth } from "../../../Auth/AuthContext";
+import { FaPlus } from "react-icons/fa6";
+import QuizAddModal from "./QuizAddModal";
 
 function QuizHome() {
+  const [modal, setModal] = useState(false)
+    const { user, isLoading } = useAuth();
+
+  const isAdmin = user?.role === "admin";
+
+  const AddModal = ()=>{
+    setModal(true)
+  }
+
   return (
     <div>
       <div className="min-h-screen  p-4 md:p-10 font-sans flex justify-center items-start">
@@ -16,13 +28,22 @@ function QuizHome() {
             }}
           >
             <div className="mb-8">
-              <div className="flex justify-between items-end mb-4">
+              <div className="flex justify-between items-center mb-4">
                 <h2 className="text-[#1A1A32] font-black text-2xl">
                   Quiz Section
                 </h2>
-                <span className="text-indigo-500/80 text-sm font-bold tracking-wide">
-                  50 / 100 XP
-                </span>
+                {isAdmin && (
+                  <div>
+                    <div
+                      onClick={() => AddModal()}
+                      className="px-4 p-2 h-10 bg-indigo-700 hover:bg-indigo-800 rounded-lg flex items-center justify-center
+                       gap-2 cursor-default"
+                    >
+                      <FaPlus className="text-white text-base" />
+                      <h1 className="text-white text-base">Add Quiz</h1>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="h-3 w-full bg-[#F3F1FA] rounded-full overflow-hidden">
@@ -117,7 +138,8 @@ function QuizHome() {
               <div className="flex gap-3 h-16 overflow-hidden">
                 <h1 className="text-sm  text-gray-600  leading-relaxed ">
                   This quiz contains 10 MCQ questions and must be completed
-                  within 10 minutes. Each question has one correct answer, A minimum score of 70% is required.
+                  within 10 minutes. Each question has one correct answer, A
+                  minimum score of 70% is required.
                 </h1>
               </div>
             </div>
@@ -126,6 +148,7 @@ function QuizHome() {
           <QuizDiv />
         </div>
       </div>
+      {modal && <QuizAddModal onClose={()=> setModal(false)} />}
     </div>
   );
 }

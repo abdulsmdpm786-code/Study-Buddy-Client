@@ -118,7 +118,8 @@ function AddModal({ onClose, id }) {
                 <textarea
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  className="w-full px-3 py-2 h-60 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 transition-colors resize-none"
+                  className="w-full px-3 py-2 h-60 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 
+                  transition-colors resize-none"
                   id="description"
                   autoFocus
                 />
