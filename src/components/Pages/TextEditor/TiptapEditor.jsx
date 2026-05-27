@@ -13,6 +13,7 @@ const MenuBar = ({ editor }) => {
   return (
     <div className="flex flex-wrap gap-2 p-2 border-b border-slate-200 bg-slate-50 rounded-t-xl">
       <button
+      type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
         className={`${btnStyle} ${editor.isActive('bold') ? 'bg-slate-800 text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
       >
@@ -20,6 +21,7 @@ const MenuBar = ({ editor }) => {
       </button>
       
       <button
+      type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
         className={`${btnStyle} ${editor.isActive('italic') ? 'bg-slate-800 text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
       >
@@ -27,6 +29,7 @@ const MenuBar = ({ editor }) => {
       </button>
 
       <button
+      type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         className={`${btnStyle} ${editor.isActive('heading', { level: 2 }) ? 'bg-slate-800 text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
       >
@@ -34,6 +37,7 @@ const MenuBar = ({ editor }) => {
       </button>
 
       <button
+      type="button"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={`${btnStyle} ${editor.isActive('bulletList') ? 'bg-slate-800 text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
       >
@@ -56,7 +60,7 @@ export default function TiptapEditor({ value, onChange }) {
     // We add Tailwind's 'prose' class to fix this, plus some min-height.
     editorProps: {
       attributes: {
-        class: 'focus:outline-none', 
+        class: 'focus:outline-none p-4 min-h-[200px] prose prose-slate max-w-none', 
       },
     },
 

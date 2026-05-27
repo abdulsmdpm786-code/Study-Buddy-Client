@@ -17,20 +17,19 @@ import { useParams } from "react-router-dom";
 import EditModal from "./EditModal";
 import AddModal from "./AddModal";
 import ResourcesContent from "./ResourcesContent";
+import { useAuth } from "../../../Auth/AuthContext";
 
 function MainSection() {
   const { courseContent } = useParams();
   console.log("params", courseContent);
 
-  
-
   const [data, setData] = useState([]);
   const [isContent, setIsContent] = useState([]);
   const [editModal, setEditModal] = useState(false);
   const [editData, setEditData] = useState("");
-  const [isMessage, setIsMessage] = useState(false)
+  const [isMessage, setIsMessage] = useState(false);
 
-  const [addModal, setAddModal] = useState(false)
+  const [addModal, setAddModal] = useState(false);
 
   const getCourse = async () => {
     try {
@@ -53,7 +52,7 @@ function MainSection() {
       if (contentResponse.status === 200) {
         console.log("clear", contentResponse.data.content);
         setIsContent(contentResponse.data.content);
-        setIsMessage(!isMessage)
+        setIsMessage(!isMessage);
       }
     } catch (error) {
       console.error(error);
@@ -62,7 +61,9 @@ function MainSection() {
 
   const content = data.find((e) => e._id === courseContent);
 
-  
+  const { user, isLoading } = useAuth();
+
+  const isAdmin = user?.role === "admin";
 
   useEffect(() => {
     getCourse();
@@ -74,35 +75,31 @@ function MainSection() {
     setEditModal(true);
   };
 
-  const handleDelete = async (id)=>{
-try {
-  const deleteResponse = await AXIOS_API.delete(
-    `/api/v1/course/content/${id}/delete`
-  )
+  const handleDelete = async (id) => {
+    try {
+      const deleteResponse = await AXIOS_API.delete(
+        `/api/v1/course/content/${id}/delete`,
+      );
 
-  if(deleteResponse.status === 200){
-    alert("item deleted")
-    window.location.reload();
-  }
-} catch (error) {
-  console.log(error);
-  
-}
-  }
+      if (deleteResponse.status === 200) {
+        alert("item deleted");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const openAddModal = ()=>{
-    setAddModal(true)
-  }
-// console.log("content...",isContent);
+  const openAddModal = () => {
+    setAddModal(true);
+  };
+  // console.log("content...",isContent);
 
-  const noteFilter = isContent.filter(n => n.title.type === "note")
-  console.log("notes...",noteFilter);
+  const noteFilter = isContent.filter((n) => n.title.type === "note");
+  console.log("notes...", noteFilter);
 
-  const reference = isContent.filter(n => n.title.type === "ref")
-  console.log("ref..",reference);
-  
-  
-
+  const reference = isContent.filter((n) => n.title.type === "ref");
+  console.log("ref..", reference);
 
   return (
     <div className="lg:col-span-2 space-y-10">
@@ -137,7 +134,7 @@ try {
 
         <div className="pt-2">
           <button
-          onClick={()=> openAddModal()}
+            onClick={() => openAddModal()}
             className="px-6 py-2.5 rounded-lg border-2 bg-indigo-700 text-white font-medium
                  hover:bg-indigo-800  transition-all duration-200 shadow-sm  "
           >
@@ -146,10 +143,7 @@ try {
         </div>
       </section>
 
-
-      
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 ">
-        
         {noteFilter.map((note, i) => (
           <div
             key={i}
@@ -157,7 +151,7 @@ try {
             hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1 relative group cursor-pointer transition-all duration-500 animate-fadeInUp"
             style={{ animationDelay: `0.${i + 1}s` }}
           >
-            <div className="flex gap-2 items-start mb-3">
+            {isAdmin && <div className="flex gap-2 items-start mb-3">
               <div
                 onClick={() => handleEdit(note)}
                 className="flex items-center gap-1.5 text-xs font-medium text-slate-700/90 bg-white/60 px-2 py-1 
@@ -178,7 +172,7 @@ try {
                 </svg>
               </div>
               <button
-              onClick={()=> handleDelete(note._id)}
+                onClick={() => handleDelete(note._id)}
                 className="text-slate-500 hover:text-red-800 transition-colors p-1 rounded-full
                 bg-white/60"
               >
@@ -196,7 +190,7 @@ try {
                   />
                 </svg>
               </button>
-            </div>
+            </div>}
 
             <h3 className="font-semibold text-slate-900 mb-2 text-base group-hover:text-indigo-900 transition-colors">
               {note?.subTitle}
@@ -209,13 +203,14 @@ try {
         ))}
       </section>
 
-     <ResourcesContent reference={reference} />
+      <ResourcesContent reference={reference} />
       {editModal && (
         <EditModal onClose={() => setEditModal(false)} data={editData} />
       )}
 
-      {addModal && <AddModal onClose={()=> setAddModal(false)}  id={courseContent}   />}
-
+      {addModal && (
+        <AddModal onClose={() => setAddModal(false)} id={courseContent} />
+      )}
     </div>
   );
 }

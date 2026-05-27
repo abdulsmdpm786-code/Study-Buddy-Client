@@ -5,7 +5,7 @@ import CourseModal from "./CourseModal";
 import { useNavigate } from "react-router-dom";
 
 function CourseList({mapCourse}) {
-  // const [data, setData] = useState(mapCourse?.Courses || []);
+
   const [isModal, setIsModal] = useState(false);
   const [editCourse, setEditCourse] = useState("")
   const navigate = useNavigate()
@@ -16,25 +16,7 @@ function CourseList({mapCourse}) {
   console.log("user details", user.role);
 
   const isAdmin = user?.role === "admin";
-  // const getCourse = async () => {
-  //   try {
-  //     const dataResponse = await AXIOS_API.get("/api/v1/course/getList");
 
-  //     if (dataResponse.status === 200) {
-  //       console.log("response", dataResponse.data.Courses);
-  //       setData(dataResponse.data.Courses);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);    
-  //   }
-  // };
-// console.log("data for test..",data);
-
-//   console.log("course for test", mapCourse.Courses);
-  
-  // useEffect(() => {
-  //   getCourse();
-  // }, []);
 
   console.log("data id", data);
 

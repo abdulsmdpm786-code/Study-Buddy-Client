@@ -16,6 +16,7 @@ import AXIOS_API from "../../../Api/api";
 import { FaPlus } from "react-icons/fa6";
 import QuizAddModal from "./QuizAddModal";
 import { useAuth } from "../../../Auth/AuthContext";
+import {useNavigate} from "react-router-dom"
 
 function RightSection() {
   const { courseContent } = useParams();
@@ -37,6 +38,7 @@ function RightSection() {
   };
 
   const content = data.find((e) => e._id === courseContent);
+  
 
   useEffect(() => {
     getCourse();
@@ -49,6 +51,11 @@ function RightSection() {
   const AddModal = () => {
     setModal(true);
   };
+
+  const navigate = useNavigate()
+  const handleNavigate = ()=> {
+    navigate(`/Dashboard/course/quiz/${courseContent}`)
+  }
 
   return (
     <div className="lg:col-span-1">
@@ -90,8 +97,10 @@ function RightSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-indigo-200 active:scale-95">
-            Add to Cart
+          <button 
+          onClick={()=> handleNavigate()}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-indigo-200 active:scale-95">
+           Attend Quiz
           </button>
           <button className="bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700 font-medium py-3 px-4 rounded-xl transition-all duration-200 active:scale-95">
             Enroll Now
