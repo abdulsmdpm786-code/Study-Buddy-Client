@@ -22,6 +22,8 @@ function MainSection() {
   const { courseContent } = useParams();
   console.log("params", courseContent);
 
+  
+
   const [data, setData] = useState([]);
   const [isContent, setIsContent] = useState([]);
   const [editModal, setEditModal] = useState(false);

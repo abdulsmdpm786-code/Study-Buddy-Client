@@ -1,23 +1,17 @@
 import React, { useState } from "react";
 import QuizDiv from "./QuizDiv";
-import { useAuth } from "../../../Auth/AuthContext";
+
 import { FaPlus } from "react-icons/fa6";
-import QuizAddModal from "./QuizAddModal";
+import QuizAddModal from "../Contents/QuizAddModal";
 
 function QuizHome() {
-  const [modal, setModal] = useState(false)
-    const { user, isLoading } = useAuth();
 
-  const isAdmin = user?.role === "admin";
 
-  const AddModal = ()=>{
-    setModal(true)
-  }
 
   return (
     <div>
       <div className="min-h-screen  p-4 md:p-10 font-sans flex justify-center items-start">
-        {/* Main Card */}
+
         <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-8 items-start">
           <div
             className="bg-white/95 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_50px_rgba(100,100,150,0.05)] p-6 sm:p-8 w-full 
@@ -32,18 +26,7 @@ function QuizHome() {
                 <h2 className="text-[#1A1A32] font-black text-2xl">
                   Quiz Section
                 </h2>
-                {isAdmin && (
-                  <div>
-                    <div
-                      onClick={() => AddModal()}
-                      className="px-4 p-2 h-10 bg-indigo-700 hover:bg-indigo-800 rounded-lg flex items-center justify-center
-                       gap-2 cursor-default"
-                    >
-                      <FaPlus className="text-white text-base" />
-                      <h1 className="text-white text-base">Add Quiz</h1>
-                    </div>
-                  </div>
-                )}
+
               </div>
 
               <div className="h-3 w-full bg-[#F3F1FA] rounded-full overflow-hidden">
@@ -148,7 +131,7 @@ function QuizHome() {
           <QuizDiv />
         </div>
       </div>
-      {modal && <QuizAddModal onClose={()=> setModal(false)} />}
+
     </div>
   );
 }

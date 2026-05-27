@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import AXIOS_API from "../../../Api/api";
 import { Plus, Trash2 } from "lucide-react";
+import { useParams } from "react-router-dom";
 
 function QuizAddModal({ onClose }) {
-  const [mainTitle, setMainTitle] = useState("");
-  const [subTitle, setSubTitle] = useState("");
-  const [type, setType] = useState("");
-  const [content, setContent] = useState("");
+  const [quizTitle, setQuizTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  const { courseContent } = useParams();
+  console.log("params.....from", courseContent);
 
   const [quizItems, setQuizItems] = useState([
     { question: "", options: [], answer: "", definition: "" },
@@ -35,17 +37,14 @@ function QuizAddModal({ onClose }) {
 
   const handleSubmit = async () => {
     const addData = {
-      mainTitle,
-      subTitle,
-      title: {
-        type,
-      },
-      content,
+      courseId: courseContent,
+      title: quizTitle,
+      description: description,
+      questions: quizItems,
     };
-
     try {
       const addResponse = await AXIOS_API.post(
-        `/api/v1/course/content/${id}/create`,
+        `/api/v1/course/quiz/${courseContent}/create`,
         addData,
       );
 
@@ -53,9 +52,11 @@ function QuizAddModal({ onClose }) {
         window.location.reload();
       }
     } catch (error) {
-      console.error("Failed to Add", error);
+      console.error("Failed to Add", error.response.data.errMsg);
     }
   };
+
+  console.log("items.......", quizItems);
 
   return (
     <div className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
@@ -95,8 +96,8 @@ function QuizAddModal({ onClose }) {
               </label>
               <input
                 type="text"
-                value={mainTitle}
-                onChange={(e) => setMainTitle(e.target.value)}
+                value={quizTitle}
+                onChange={(e) => setQuizTitle(e.target.value)}
                 className="w-full px-3 py-2 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 transition-colors"
                 autoFocus
               />
@@ -107,9 +108,10 @@ function QuizAddModal({ onClose }) {
                 Description
               </label>
               <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="w-full px-3 py-2 h-24 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 transition-colors resize-none"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full px-3 py-2 h-24 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 
+                transition-colors resize-none"
               />
             </div>
 
@@ -171,7 +173,7 @@ function QuizAddModal({ onClose }) {
                     type="text"
                     name="definition"
                     value={item.definition}
-                      onChange={(e) => handleChange(index, e)}
+                    onChange={(e) => handleChange(index, e)}
                     className="w-full px-3 py-2 border border-slate-200 bg-white rounded-xl outline-none focus:border-indigo-500 transition-colors"
                   />
                 </div>
@@ -211,7 +213,7 @@ function QuizAddModal({ onClose }) {
               type="submit"
               className="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm shadow-indigo-100 transition-colors"
             >
-              Save Content
+              Add Quiz
             </button>
           </div>
         </div>
