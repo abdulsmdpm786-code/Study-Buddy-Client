@@ -26,7 +26,7 @@ export default function CreateCourseForm() {
         content: description,
       });
       if (addText.status === 200) {
-        setBlogs(addText?.data?.text?.content);
+        setBlogs(addText?.data?.text);
         window.location.reload();
       }
     } catch (error) {
@@ -95,7 +95,7 @@ setReadData(data)
           animationDelay: `0.2s`,
         }}
       >
-        <h1 className="text-2xl font-bold mb-4">Course Description</h1>
+        <h1 className="text-2xl font-bold mb-4">Create Blogs</h1>
 
         <TiptapEditor value={description} onChange={setDescription} />
 
@@ -115,7 +115,9 @@ setReadData(data)
               blogs.map((blog, i) => (
                 <div
                   key={i}
-                  className="bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-md border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-2xl p-5 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1 relative group cursor-pointer transition-all duration-500 animate-fadeInUp"
+                  className="bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-md border border-white/60
+                   shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-2xl p-3 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
+                   hover:-translate-y-1 relative group cursor-pointer transition-all duration-500 animate-fadeInUp flex flex-col"
                   style={{ animationDelay: `0.${i + 1}s` }}
                 >
                   <div className="flex gap-2 items-start mb-3">
@@ -160,7 +162,7 @@ setReadData(data)
                   </div>
 
                   <div
-                    className=" text-sm text-slate-800 prose prose-sm line-clamp-6 font-serif"
+                    className=" text-xs text-slate-800 prose prose-sm line-clamp-6 font-serif flex-1"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(blog.content),
                     }}
