@@ -40,7 +40,7 @@ function Navbar({onCategoryInput}) {
           )}
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex gap-8 items-center bg-white/40 px-6 py-2 rounded-full border border-white/50 shadow-inner">
+          <div className="hidden lg:flex gap-8 items-center bg-white/40 px-6 py-2 rounded-full border border-white/50 shadow-inner">
             <div
               onClick={() => onCategoryInput("All")}
               className="text-slate-800 font-bold hover:text-primary transition-colors relative group cursor-default"
@@ -73,7 +73,7 @@ function Navbar({onCategoryInput}) {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden text-xl text-primary p-2.5 bg-white/60 hover:bg-white/80 rounded-full border border-white/50 shadow-sm transition-colors"
+            className="lg:hidden text-xl text-primary p-2.5 bg-white/60 hover:bg-white/80 rounded-full border border-white/50 shadow-sm transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle Menu"
           >
@@ -82,7 +82,9 @@ function Navbar({onCategoryInput}) {
 
           {/* Mobile Dropdown Menu */}
           <div
-            className={`absolute top-full left-0 right-0 mt-3 p-4 bg-white/80 backdrop-blur-2xl border border-white/50 shadow-2xl rounded-3xl transition-all duration-300 ease-in-out md:hidden z-50 origin-top ${isMenuOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible"}`}
+            className={`absolute top-full left-0 right-0 mt-3 p-4 bg-white/80 backdrop-blur-2xl border border-white/50 
+              shadow-2xl rounded-3xl transition-all duration-300 ease-in-out lg:hidden z-50
+               origin-top ${isMenuOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible"}`}
           >
             <div className="flex flex-col gap-2">
               <div

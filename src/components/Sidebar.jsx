@@ -30,7 +30,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   };
   return (
     <aside
-      className={`w-[280px] md:w-[260px] bg-white/85 md:bg-glass backdrop-blur-xl border-r border-glass-border py-8 flex flex-col shadow-[5px_0_25px_rgba(0,0,0,0.02)] z-30 fixed md:sticky top-0 h-screen transition-all duration-300 ${isOpen ? "left-0" : "-left-[100%] md:left-0"}`}
+      className={`w-[280px] md:w-[260px] bg-white/85 md:bg-glass backdrop-blur-xl border-r border-glass-border py-8 flex
+         flex-col shadow-[5px_0_25px_rgba(0,0,0,0.02)] z-30 fixed md:sticky top-0 h-screen transition-all duration-300
+          ${isOpen ? "left-0" : "-left-[100%] md:left-0"}`}
     >
       <div className="flex items-center gap-2.5 mx-4 mb-8 p-3.5 bg-white/70 rounded-xl shadow-sm border border-white/80">
         <div className="text-primary text-xl flex">
@@ -47,14 +49,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </button>
       </div>
       <nav className="flex flex-col gap-1.5 px-4">
-        <a
-          href="#"
+        <Link
+          to={"/Dashboard"}
           className="flex items-center px-5 py-3.5 gap-4 font-semibold rounded-xl transition-all duration-300
          bg-primary text-white shadow-[0_4px_15px_rgba(79,70,229,0.3)] hover:-translate-y-0.5"
         >
           <FaTableColumns className="text-lg min-w-[24px]" />
           <span>Dashboard</span>
-        </a>
+        </Link>
         <a
           href="#"
           className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300 hover:bg-white/60 hover:text-primary hover:translate-x-1"

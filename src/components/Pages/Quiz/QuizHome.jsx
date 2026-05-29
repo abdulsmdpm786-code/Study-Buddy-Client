@@ -10,17 +10,18 @@ function QuizHome() {
 
   return (
     <div>
-      <div className="min-h-screen  p-4 md:p-10 font-sans flex justify-center items-start">
+      <div className="min-h-screen  p-4 font-sans flex justify-center items-start">
 
-        <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-8 items-start">
+        <div className="w-full max-w-7xl flex flex-col xl:flex-row gap-8 items-start">
           <div
             className="bg-white/95 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_50px_rgba(100,100,150,0.05)] p-6 sm:p-8 w-full 
-        lg:w-[400px] shrink-0 hover:-translate-y-1  cursor-pointer transition-all duration-500 animate-fadeInUp 
+        xl:w-[400px] shrink-0 hover:-translate-y-1  cursor-pointer transition-all duration-500 animate-fadeInUp 
                         hover:shadow  group`"
             style={{
               animationDelay: "0.2s",
             }}
           >
+
             <div className="mb-8">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-[#1A1A32] font-black text-2xl">
@@ -86,7 +87,7 @@ function QuizHome() {
                 </span>
               </div>
 
-              {/* Max Streak Stat */}
+
               <div className="bg-[#FCFCFF] border border-indigo-50/50 rounded-2xl py-5 px-2 flex flex-col items-center justify-center gap-2 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

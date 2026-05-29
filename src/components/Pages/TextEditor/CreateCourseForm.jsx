@@ -7,7 +7,7 @@ import EditModal from "./editModal";
 import ReadArticleModal from "./ReadArticleModal";
 
 export default function CreateCourseForm() {
-  // This state will hold the HTML string from TipTap
+ 
   const [description, setDescription] = useState("");
   const [blogs, setBlogs] = useState([]);
   const [isModal, setIsModal] = useState(false);
@@ -108,15 +108,16 @@ setReadData(data)
         </button>
       </form>
       <div>
-        <h1 className="text-5xl font-bold text-indigo-600">Blogs</h1>
+        <h1 className="text-5xl font-bold text-indigo-600  transition-all duration-500 animate-fadeInUp flex flex-col"
+                  style={{ animationDelay: `0.2s` }}>Blogs</h1>
         <div>
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+          <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
             {blogs.length > 0 ? (
               blogs.map((blog, i) => (
                 <div
                   key={i}
                   className="bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-md border border-white/60
-                   shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-2xl p-3 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
+                   shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-2xl p-5 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
                    hover:-translate-y-1 relative group cursor-pointer transition-all duration-500 animate-fadeInUp flex flex-col"
                   style={{ animationDelay: `0.${i + 1}s` }}
                 >

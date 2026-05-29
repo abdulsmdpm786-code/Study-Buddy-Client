@@ -8,13 +8,13 @@ import {
   FaMedal,
 } from "react-icons/fa6";
 import { useAuth } from "../Auth/AuthContext";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [time, setTime] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  const {user} = useAuth()
+  const { user } = useAuth();
   console.log("user from Dashboard...", user);
-  
 
   useEffect(() => {
     let interval = null;
@@ -86,7 +86,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Legacy Card */}
       <div
         className={`${cardBase} col-span-1 md:col-span-3 xl:col-span-1 xl:row-span-3 !flex-col md:!flex-row xl:!flex-col
          text-center xl:justify-center items-center gap-6 xl:gap-0 p-8`}
@@ -106,13 +105,17 @@ const Dashboard = () => {
           <p className="text-sm text-slate-500 mb-6 leading-relaxed">
             To improve productivity, always have a shittier task to put off.
           </p>
-          <button className="w-full md:w-auto xl:w-full bg-primary hover:bg-primary-hover text-white py-3.5 px-6 rounded-xl font-semibold shadow-[0_4px_15px_rgba(79,70,229,0.3)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.4)] transition-all hover:-translate-y-0.5">
+          <Link
+            to={"Course"}
+            className="w-full md:w-auto xl:w-full bg-primary hover:bg-primary-hover text-white py-3.5 px-6 
+           rounded-xl font-semibold shadow-[0_4px_15px_rgba(79,70,229,0.3)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.4)]
+            transition-all hover:-translate-y-0.5"
+          >
             Continue Learning
-          </button>
+          </Link>
         </div>
       </div>
 
-      {/* Dictionary Section */}
       <div
         className={cardBase}
         style={{
@@ -128,8 +131,8 @@ const Dashboard = () => {
         <p className="text-sm text-slate-500 mt-1">Review Tasks</p>
       </div>
 
-      {/* Quiz Section */}
-      <div
+      <Link
+        to={"course/quiz"}
         className={cardBase}
         style={{
           background:
@@ -142,10 +145,10 @@ const Dashboard = () => {
         </div>
         <h4 className="font-bold text-slate-800">Quiz Section</h4>
         <p className="text-sm text-slate-500 mt-1">Check it out</p>
-      </div>
+      </Link>
 
-      {/* Note Section */}
-      <div
+      <Link
+        to={"course/editor"}
         className={cardBase}
         style={{
           background:
@@ -158,9 +161,8 @@ const Dashboard = () => {
         </div>
         <h4 className="font-bold text-slate-800">Note Section</h4>
         <p className="text-sm text-slate-500 mt-1">More to learn</p>
-      </div>
+      </Link>
 
-      {/* Victory Vault */}
       <div
         className={`${cardBase} col-span-1 md:col-span-2`}
         style={{
@@ -179,7 +181,6 @@ const Dashboard = () => {
         </p>
       </div>
 
-      {/* Gather More */}
       <div
         className={`${cardBase} justify-between`}
         style={{
@@ -199,7 +200,6 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {/* Study Timer */}
       <div
         className={`${cardBase} justify-between !bg-white/70 hover:!bg-white/85`}
         style={{ animationDelay: "0.8s" }}

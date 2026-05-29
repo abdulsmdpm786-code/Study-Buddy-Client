@@ -47,7 +47,7 @@ function CourseList({mapCourse}) {
 
   return (
     <div>
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
         {data &&
           data.map((data, index) => (
             <div

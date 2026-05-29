@@ -7,11 +7,11 @@ const Home = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-gradient-to-br from-slate-50 to-purple-50">
-      {/* Decorative background elements */}
+   
       <div className="absolute top-[-10%] right-[-5%] w-[40rem] h-[40rem] rounded-full bg-purple-300 mix-blend-multiply filter blur-3xl opacity-30 animate-float" style={{ animationDelay: '0s' }}></div>
       <div className="absolute bottom-[-10%] left-[-10%] w-[40rem] h-[40rem] rounded-full bg-pink-300 mix-blend-multiply filter blur-3xl opacity-30 animate-float" style={{ animationDelay: '2s' }}></div>
 
-      {/* Navbar */}
+     
       <div className="w-full px-4 pt-4 flex justify-center sticky top-0 z-50">
         <nav className="w-full max-w-4xl bg-white/40 backdrop-blur-xl border border-white/50 shadow-lg rounded-full px-6 py-3 flex justify-between items-center transition-all duration-300 relative">
           <div className="flex items-center gap-3">
@@ -21,7 +21,7 @@ const Home = () => {
             <span className="text-2xl font-extrabold text-primary tracking-tight">Qalam Academy</span>
           </div>
 
-          {/* Desktop Menu */}
+        
           <div className="hidden md:flex gap-8 items-center bg-white/40 px-6 py-2 rounded-full border border-white/50 shadow-inner">
             <Link to="/" className="text-slate-800 font-bold hover:text-primary transition-colors relative group">
               Home
@@ -33,7 +33,7 @@ const Home = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
+         
           <button 
             className="md:hidden text-xl text-primary p-2.5 bg-white/60 hover:bg-white/80 rounded-full border border-white/50 shadow-sm transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}

@@ -78,7 +78,7 @@ export default function QuizSection() {
   return (
     <div className="min-h-screen flex items-center justify-center  relative overflow-hidden ">
       <div className="w-full max-w-3xl relative z-10 flex flex-col items-center">
-        {/* Header */}
+    
         <div className="text-center mb-6">
           <h1
             className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 
@@ -91,7 +91,7 @@ export default function QuizSection() {
           </p>
         </div>
 
-        {/* Quiz Card */}
+  
         <div
           className="w-full backdrop-blur-2xl bg-white/35 border border-white/40 rounded-[24px] px-3 sm:px-4 py-4 
         shadow-[0_8px_32px_rgba(31,38,135,0.15)] transition-all duration-300 animate-fadeInUp group h-full mt-5"
@@ -99,7 +99,7 @@ export default function QuizSection() {
             animationDelay: "0.2s",
           }}
         >
-          {/* Top Status Area */}
+       
           <div className="flex flex-row gap-4 justify-between items-center mb-6">
             <div className="flex gap-4">
               <div className="backdrop-blur-xl bg-white/30 border border-white/40 px-4 py-2 rounded-2xl">
@@ -120,7 +120,7 @@ export default function QuizSection() {
             </div>
           </div>
 
-          {/* Progress Bar */}
+        
           <div className="w-full h-2 sm:h-3 bg-white/30 rounded-full overflow-hidden mb-8">
             <div
               style={{ width: `${progress}%` }}
@@ -128,9 +128,9 @@ export default function QuizSection() {
             />
           </div>
 
-          {/* Side-by-Side Question and Answers Area */}
-          <div className="flex flex-col md:flex-row gap-8 md:gap-12">
-            {/* Question Side (Left) */}
+       
+          <div className="flex flex-col lg:flex-row gap-8 md:gap-12">
+          
             <div className="flex-1">
               <h2 className="text-xl sm:text-2xl md:text-3xl md:leading-snug font-semibold text-slate-800">
                 {quizContent[currentQuestion]?.question}
