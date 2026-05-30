@@ -57,13 +57,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           <FaTableColumns className="text-lg min-w-[24px]" />
           <span>Dashboard</span>
         </Link>
-        <a
-          href="#"
+        <Link
+          to={"task"}
           className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300 hover:bg-white/60 hover:text-primary hover:translate-x-1"
         >
           <FaListCheck className="text-lg min-w-[24px]" />
           <span>Tasks</span>
-        </a>
+        </Link>
 
         <Link
           to={"Course"}
@@ -82,13 +82,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           <FaClipboardQuestion className="text-lg min-w-[24px]" />
           <span>Quiz</span>
         </Link>
-        <a
-          href="#"
+        <Link
+          to={"dictionary"}
           className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300 hover:bg-white/60 hover:text-primary hover:translate-x-1"
         >
           <FaSpellCheck className="text-lg min-w-[24px]" />
           <span>Dictionary</span>
-        </a>
+        </Link>
         <Link to={"course/editor"} className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300 hover:bg-white/60 hover:text-primary hover:translate-x-1">
           <FaFileSignature className="text-lg min-w-[24px]" />
           <span>Text Editor</span>

@@ -13,7 +13,8 @@ const Home = () => {
 
      
       <div className="w-full px-4 pt-4 flex justify-center sticky top-0 z-50">
-        <nav className="w-full max-w-4xl bg-white/40 backdrop-blur-xl border border-white/50 shadow-lg rounded-full px-6 py-3 flex justify-between items-center transition-all duration-300 relative">
+        <nav className="w-full max-w-4xl bg-white/40 backdrop-blur-xl border border-white/50 shadow-lg rounded-full px-6 
+        py-3 flex justify-between items-center transition-all duration-300 relative">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-purple-500 flex items-center justify-center text-white shadow-lg">
               <FaGraduationCap className="text-xl" />
@@ -42,7 +43,7 @@ const Home = () => {
             {isMenuOpen ? <FaXmark /> : <FaBars />}
           </button>
 
-          {/* Mobile Dropdown Menu */}
+        
           <div className={`absolute top-full left-0 right-0 mt-3 p-4 bg-white/80 backdrop-blur-2xl border border-white/50 shadow-2xl rounded-3xl transition-all duration-300 ease-in-out md:hidden z-50 origin-top ${isMenuOpen ? 'opacity-100 scale-y-100 visible' : 'opacity-0 scale-y-95 invisible'}`}>
             <div className="flex flex-col gap-2">
               <Link to="/" className="text-slate-800 font-bold hover:text-primary hover:bg-white/50 px-5 py-3 rounded-xl transition-all" onClick={() => setIsMenuOpen(false)}>Home</Link>
@@ -53,7 +54,7 @@ const Home = () => {
       </div>
 
 
-      {/* Hero Section */}
+     
       <main className="flex-1 flex items-center justify-center p-6 md:p-12 relative z-10">
         <div className="max-w-6xl w-full grid md:grid-cols-2 gap-16 items-center">
           

@@ -57,7 +57,7 @@ const Dashboard = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 max-w-[1300px] mx-auto">
-      {/* Welcome Banner */}
+
       <div
         className="col-span-1 md:col-span-3 row-span-2 rounded-3xl p-10 flex flex-col md:flex-row items-center 
         justify-between shadow-[0_15px_40px_rgba(30,58,138,0.3)] text-white relative overflow-hidden transition-all 
@@ -116,7 +116,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div
+
+      <Link
+      to={"dictionary"}
         className={cardBase}
         style={{
           background:
@@ -128,8 +130,8 @@ const Dashboard = () => {
           <FaBook />
         </div>
         <h4 className="font-bold text-slate-800">Dictionary Section</h4>
-        <p className="text-sm text-slate-500 mt-1">Review Tasks</p>
-      </div>
+        <p className="text-sm text-slate-500 mt-1">Explore new words..</p>
+      </Link>
 
       <Link
         to={"course/quiz"}

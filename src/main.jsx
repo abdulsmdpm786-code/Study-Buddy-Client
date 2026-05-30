@@ -14,6 +14,8 @@ import CourseContents from "./components/Pages/Contents/CourseContents.jsx";
 import QuizHome from "./components/Pages/Quiz/QuizHome.jsx";
 import QuizSection from "./components/Pages/Quiz/QuizSection.jsx";
 import CreateCourseForm from "./components/Pages/TextEditor/CreateCourseForm.jsx";
+import TaskMain from "./components/Pages/Task/TaskMain.jsx";
+import DictionaryMain from "./components/Pages/Dictionary/DictionaryMain.jsx";
 
 
 const router = createBrowserRouter([
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
           {
             path: "course/editor",
             element: <CreateCourseForm />,
+          },
+          {
+            path: "task",
+            element: <TaskMain />,
+          },
+          {
+            path: "dictionary",
+            element: <DictionaryMain />,
           },
         ],
       },
