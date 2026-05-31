@@ -12,6 +12,7 @@ export default function QuizSection() {
   const [isAnswer, setIsAnswer] = useState(false);
   const [prizeModal, setPrizeModal] = useState(false)
 
+
   const handleFetch = async () => {
     try {
       const quizQuestions = await AXIOS_API.get(
@@ -27,7 +28,7 @@ export default function QuizSection() {
     }
   };
 
-  console.log("quiz content..", quizContent);
+  // console.log("quiz content..", quizContent.length);
 
   useEffect(() => {
     handleFetch();
@@ -37,6 +38,7 @@ export default function QuizSection() {
   const [selected, setSelected] = useState("");
   let [score, setScore] = useState(0);
   const answer = quizContent[currentQuestion]?.answer;
+  const [length, setLength] = useState(quizContent?.length)
 
   const handleForward = () => {
     setIsAnswer(false);
@@ -116,7 +118,7 @@ export default function QuizSection() {
               </div>
             </div>
             <div className="backdrop-blur-xl bg-white/30 border border-white/40 px-4 py-2 sm:px-5 sm:py-3 rounded-2xl">
-              <QuizTimer />
+              <QuizTimer content={quizContent} />
             </div>
           </div>
 

@@ -8,33 +8,32 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [isLogin, setIsLogin] = useState(false)
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleSignIn = async(e)=>{
+  const handleSignIn = async (e) => {
+    setIsLogin(true)
     try {
       console.log("Working....");
 
       const responseUser = await AXIOS_API.post("/api/v1/user/login", {
         email,
-        password
-      })
+        password,
+      });
 
-      if(responseUser.status === 200){
+      if (responseUser.status === 200) {
         console.log("All Clear...", responseUser);
 
-        setEmail("")
-        setPassword("")
+        setEmail("");
+        setPassword("");
 
-        navigate("/Dashboard", {replace:true})
-        
+        navigate("/Dashboard", { replace: true });
       }
-      
     } catch (error) {
       console.log(error);
     }
-
-  }
+  };
 
   useEffect(() => {
     setIsVisible(true);
@@ -42,8 +41,6 @@ function SignIn() {
   return (
     <div className="flex justify-center items-center min-h-[100vh]">
       <div className="w-full max-w-md relative z-10 p-2">
-        {/* {if need to add decorations } */}
-
         <div
           className={`backdrop-blur-xl bg-white/10 border border-white/20 p-8 rounded-3xl 
         shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] relative overflow-hidden transition-all duration-700 
@@ -93,7 +90,7 @@ function SignIn() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  {/* <User className="h-5 w-5 text-slate-400" /> */}
+
                 </div>
                 <input
                   value={password}
@@ -108,15 +105,22 @@ function SignIn() {
                 />
               </div>
             </div>
-            <button
-                onClick={handleSignIn}
+            {isLogin ? <button
+              type="button"
+              className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl 
+            shadow-sm text-base font-medium text-white bg-indigo-300 
+             transition-colors mt-4"
+            >
+              Loading...
+            </button>: <button
+              onClick={handleSignIn}
               type="button"
               className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl 
             shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 
             focus:ring-offset-2 focus:ring-indigo-500 transition-colors mt-4"
             >
               sign in
-            </button>
+            </button>}
           </form>
           <p className="mt-8 text-center text-sm text-slate-700">
             Don't have an account? {""}

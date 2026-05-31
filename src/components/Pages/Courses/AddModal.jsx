@@ -6,14 +6,13 @@ function AddModal({ onClose }) {
   const [price, setPrice] = useState("");
   const [duration, setDuration] = useState("");
   const [shortTitle, setShortTitle] = useState("");
-  const [description, setDescription] = useState("")
-
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState("");
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-    const handleImageChange = (e) => {
-    
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     console.log("Did I catch a file?", file);
     if (file) {
@@ -24,13 +23,14 @@ function AddModal({ onClose }) {
   };
 
   const handleSubmit = async () => {
+    setError("")
     const formData = new FormData();
-    formData.append("shortTitle", shortTitle)
+    formData.append("shortTitle", shortTitle);
     formData.append("title", title);
     formData.append("price", price);
     formData.append("duration", duration);
     formData.append("Image", imageFile);
-    formData.append("description", description)
+    formData.append("description", description);
 
     try {
       const addResponse = await AXIOS_API.post(
@@ -43,12 +43,10 @@ function AddModal({ onClose }) {
         onClose();
       }
     } catch (error) {
-      console.error("Failed to Add", error);
+      setError(error.response?.data?.errMsg || "Course Adding Failed");
     }
   };
-  console.log("image", imageFile);
-
-
+  console.log("image", error);
 
   return (
     <div className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
@@ -80,7 +78,11 @@ function AddModal({ onClose }) {
               </svg>
             </button>
           </div>
-
+          {error && (
+            <div className="p-3 mb-4 text-base text-center bg-rose-600 text-white  rounded-lg">
+              {error}
+            </div>
+          )}
           <div>
             <div className="space-y-4">
               <div>
@@ -159,11 +161,7 @@ function AddModal({ onClose }) {
                     id="dateOfBirth"
                   />
                 </div>
-
-                
               </div>
-
-              
 
               <div>
                 <label
@@ -229,7 +227,7 @@ function AddModal({ onClose }) {
                 type="submit"
                 className="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm shadow-indigo-100 transition-colors"
               >
-                Save changes
+                Add course
               </button>
             </div>
           </div>

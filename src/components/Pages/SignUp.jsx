@@ -45,7 +45,7 @@ function SignUp() {
       alert("Success! You can now log in.");
       navigate("/SignIn", { replace: true });
     } catch (error) {
-      setError(err.response?.data?.errMsg || "Verification failed");
+      setError(error.response?.data?.errMsg || "Verification failed");
     }
   };
 

@@ -7,18 +7,19 @@ import EditModal from "./editModal";
 import ReadArticleModal from "./ReadArticleModal";
 
 export default function CreateCourseForm() {
- 
   const [description, setDescription] = useState("");
   const [blogs, setBlogs] = useState([]);
   const [isModal, setIsModal] = useState(false);
   const [editData, setEditData] = useState("");
   const [isRead, setIsRead] = useState(false);
-  const [readData, setReadData] = useState("")
+  const [readData, setReadData] = useState("");
+  const [error, setError] = useState("");
 
   console.log(".......", blogs);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("")
     console.log("Sending to database:", description);
 
     try {
@@ -30,7 +31,7 @@ export default function CreateCourseForm() {
         window.location.reload();
       }
     } catch (error) {
-      console.log(error);
+      setError(error.response?.data?.errMsg || "Verification failed");
     }
   };
 
@@ -72,7 +73,7 @@ export default function CreateCourseForm() {
 
   const handleRead = (data) => {
     setIsRead(true);
-setReadData(data)
+    setReadData(data);
   };
 
   console.log("edit data..", editData);
@@ -96,6 +97,14 @@ setReadData(data)
         }}
       >
         <h1 className="text-2xl font-bold mb-4">Create Blogs</h1>
+        {error && (
+          <div className="p-3 mb-4 text-base text-center bg-rose-600 text-white  rounded-lg transition-all duration-300 animate-fadeInUp group h-full "
+        style={{
+          animationDelay: `0.1s`,
+        }}>
+            {error}
+          </div>
+        )}
 
         <TiptapEditor value={description} onChange={setDescription} />
 
@@ -108,8 +117,12 @@ setReadData(data)
         </button>
       </form>
       <div>
-        <h1 className="text-5xl font-bold text-indigo-600  transition-all duration-500 animate-fadeInUp flex flex-col"
-                  style={{ animationDelay: `0.2s` }}>Blogs</h1>
+        <h1
+          className="text-5xl font-bold text-indigo-600  transition-all duration-500 animate-fadeInUp flex flex-col"
+          style={{ animationDelay: `0.2s` }}
+        >
+          Blogs
+        </h1>
         <div>
           <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
             {blogs.length > 0 ? (
@@ -187,7 +200,9 @@ setReadData(data)
       {isModal && (
         <EditModal onClose={() => setIsModal(false)} data={editData} />
       )}
-      {isRead && <ReadArticleModal onClose={() => setIsRead(false)}  article={readData}/>}
+      {isRead && (
+        <ReadArticleModal onClose={() => setIsRead(false)} article={readData} />
+      )}
     </div>
   );
 }

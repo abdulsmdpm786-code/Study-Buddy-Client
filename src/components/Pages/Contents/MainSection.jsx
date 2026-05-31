@@ -93,7 +93,6 @@ function MainSection() {
   const openAddModal = () => {
     setAddModal(true);
   };
-  // console.log("content...",isContent);
 
   const noteFilter = isContent.filter((n) => n.title.type === "note");
   console.log("notes...", noteFilter);

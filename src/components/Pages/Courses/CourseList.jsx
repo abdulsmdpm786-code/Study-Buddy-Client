@@ -4,19 +4,17 @@ import { useAuth } from "../../../Auth/AuthContext";
 import CourseModal from "./CourseModal";
 import { useNavigate } from "react-router-dom";
 
-function CourseList({mapCourse}) {
-
+function CourseList({ mapCourse }) {
   const [isModal, setIsModal] = useState(false);
-  const [editCourse, setEditCourse] = useState("")
-  const navigate = useNavigate()
+  const [editCourse, setEditCourse] = useState("");
+  const navigate = useNavigate();
 
-  const data = mapCourse?.Courses 
+  const data = mapCourse?.Courses;
 
   const { user, isLoading } = useAuth();
   console.log("user details", user.role);
 
   const isAdmin = user?.role === "admin";
-
 
   console.log("data id", data);
 
@@ -35,21 +33,19 @@ function CourseList({mapCourse}) {
   };
 
   const handleModal = (course) => {
-      setEditCourse(course)
+    setEditCourse(course);
     setIsModal(!isModal);
   };
 
-  const handleRoute = (id)=>{
-    navigate(`/Dashboard/course/${id}`)
-
-  } 
-
+  const handleRoute = (id) => {
+    navigate(`/Dashboard/course/${id}`);
+  };
 
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {data &&
-          data.map((data, index) => (
+        {data?.length !== 0 ? (
+          data?.map((data, index) => (
             <div
               key={data._id}
               className="relative flex w-full max-w-sm flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white 
@@ -58,7 +54,6 @@ function CourseList({mapCourse}) {
                 animationDelay: `0.${(index || 0) + 1}s`,
               }}
             >
-              {/* Image Header Wrapper */}
               <div className="relative block w-full p-2 overflow-hidden aspect-video">
                 <div className="w-full h-full overflow-hidden rounded-xl bg-slate-100">
                   <img
@@ -72,7 +67,6 @@ function CourseList({mapCourse}) {
                   />
                 </div>
 
-                {/* Short Category Badge */}
                 {data.shortTitle && (
                   <span
                     className="absolute top-4 left-4 rounded-md bg-slate-900/80 backdrop-blur-sm px-2.5 py-1 text-xs 
@@ -84,7 +78,6 @@ function CourseList({mapCourse}) {
 
                 {isAdmin && (
                   <div className="absolute top-4 right-4 flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
-                    {/* Edit Button */}
                     <button
                       type="button"
                       onClick={() => handleModal(data)}
@@ -106,7 +99,6 @@ function CourseList({mapCourse}) {
                       </svg>
                     </button>
 
-                    {/* Delete Button */}
                     <button
                       type="button"
                       onClick={() => handleDelete(data._id)}
@@ -132,15 +124,12 @@ function CourseList({mapCourse}) {
                 )}
               </div>
 
-              {/* Content Body */}
               <div className="p-5 flex flex-col flex-grow justify-between gap-4">
                 <div className="space-y-2.5">
-                  {/* Title */}
                   <h5 className="text-lg font-bold leading-snug tracking-tight text-slate-900 line-clamp-2">
                     {data.title || "Untitled Course"}
                   </h5>
 
-                  {/* Price & Metadata Container */}
                   <div className="flex items-baseline justify-between pt-1">
                     <div className="flex items-baseline gap-2">
                       <span className="text-2xl font-black text-indigo-600">
@@ -151,7 +140,6 @@ function CourseList({mapCourse}) {
                       </span>
                     </div>
 
-                    {/* Duration Badge */}
                     {data.duration && (
                       <div
                         className="flex items-center text-xs font-medium text-slate-500 bg-slate-50 px-2 py-1 rounded-md border
@@ -176,22 +164,34 @@ function CourseList({mapCourse}) {
                   </div>
                 </div>
 
-                {/* Action Button */}
                 <button
-                onClick={()=> handleRoute(data._id)}
+                  onClick={() => handleRoute(data._id)}
                   type="button"
                   className="w-full mt-auto flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 
                 text-center text-sm font-semibold text-white shadow-sm shadow-indigo-200 hover:bg-indigo-700 active:scale-[0.98]
                  focus:outline-none focus:ring-4 focus:ring-indigo-100 transition-all duration-200"
                 >
-                  
                   Learn More
                 </button>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <div
+            className="p-3 text-xl text-center flex justify-center items-center bg-rose-600 text-white 
+           rounded-lg  shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 animate-fadeInUp group h-full 
+           mt-5 "
+            style={{
+              animationDelay: `0.2s`,
+            }}
+          >
+            No items available..
+          </div>
+        )}
       </div>
-      {isModal && <CourseModal course={editCourse} onClose={() => setIsModal(false)} />}
+      {isModal && (
+        <CourseModal course={editCourse} onClose={() => setIsModal(false)} />
+      )}
     </div>
   );
 }

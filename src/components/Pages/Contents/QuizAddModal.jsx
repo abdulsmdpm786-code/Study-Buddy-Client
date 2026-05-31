@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 function QuizAddModal({ onClose }) {
   const [quizTitle, setQuizTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [error, setError] = useState("");
 
   const { courseContent } = useParams();
   console.log("params.....from", courseContent);
@@ -52,7 +53,7 @@ function QuizAddModal({ onClose }) {
         window.location.reload();
       }
     } catch (error) {
-      console.error("Failed to Add", error.response.data.errMsg);
+      setError(error.response?.data?.errMsg || "Registration failed");
     }
   };
 
@@ -90,6 +91,11 @@ function QuizAddModal({ onClose }) {
           </div>
 
           <div className="space-y-4 overflow-y-auto pr-2 max-h-[60vh]">
+            {error && (
+              <div className="p-3 mb-4 text-base text-center bg-rose-600 text-white  rounded-lg">
+                {error}
+              </div>
+            )}
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-1">
                 Quiz Title

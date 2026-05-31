@@ -30,6 +30,20 @@ function QuizDiv() {
     navigate(`/Dashboard/course/quiz/${id}`);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const deleteResponse = await AXIOS_API.delete(
+        `api/v1/course/quiz/${id}/delete`,
+      );
+      if (deleteResponse.status === 200) {
+        console.log("deleted...");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full items-stretch">
       {quizData &&
@@ -44,7 +58,6 @@ function QuizDiv() {
               }}
             >
               <div className="p-2">
-                
                 <div className="flex  items-center justify-between mb-2 flex-1">
                   <span
                     className="text-xs bg-slate-100 group-hover:bg-indigo-100 text-slate-700 group-hover:text-indigo-700
@@ -55,6 +68,7 @@ function QuizDiv() {
 
                   <div className="flex gap-2">
                     <svg
+                      onClick={() => handleDelete(data._id)}
                       className="w-4 h-4 text-slate-400 hover:text-rose-400 transition-colors"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -68,30 +82,15 @@ function QuizDiv() {
                         4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                       />
                     </svg>
-
-                    <svg
-                      className="w-4 h-4 text-slate-400 hover:text-indigo-300 transition-colors"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
                   </div>
                 </div>
-                
-                  <h3 className="font-bold text-sm text-white mb-1  transition-colors">
-                    {data.title}
-                  </h3>
-                  <p className="text-xs text-indigo-100/80 leading-relaxed font-normal mt-2">
-                    {data.description}
-                  </p>
-              
+
+                <h3 className="font-bold text-sm text-white mb-1  transition-colors">
+                  {data.title}
+                </h3>
+                <p className="text-xs text-indigo-100/80 leading-relaxed font-normal mt-2">
+                  {data.description}
+                </p>
               </div>
 
               <div

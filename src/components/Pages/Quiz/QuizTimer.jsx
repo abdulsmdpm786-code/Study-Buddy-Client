@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-function QuizTimer() {
+function QuizTimer({ content }) {
+  const quizLength = content.length;
+
+  // const milleSec = quizLength * 1 * 60000;
+  // console.log("mille", milleSec);
   const [timer, setTimer] = useState(600);
   const [manage, setManage] = useState(true);
 

@@ -6,16 +6,16 @@ function AddModal({ onClose, id }) {
   const [subTitle, setSubTitle] = useState("");
   const [type, setType] = useState("");
   const [content, setContent] = useState("");
+  const [error, setError] = useState("");
 
   console.log("id...", id);
-  
 
   const handleSubmit = async () => {
     const addData = {
       mainTitle,
       subTitle,
       title: {
-        type
+        type,
       },
       content,
     };
@@ -30,14 +30,14 @@ function AddModal({ onClose, id }) {
         window.location.reload();
       }
     } catch (error) {
-      console.error("Failed to Add", error);
+      setError(error.response?.data?.errMsg || "Registration failed");
     }
   };
 
   return (
     <div className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
       <div
-        className="relative w-full max-w-md flex flex-col bg-white rounded-2xl shadow-xl border border-slate-100
+        className="relative w-full max-w-md flex flex-col  bg-white rounded-2xl shadow-xl border border-slate-100
        overflow-hidden animate-fadeInUp"
       >
         <div className="p-6">
@@ -64,7 +64,11 @@ function AddModal({ onClose, id }) {
               </svg>
             </button>
           </div>
-
+          {error && (
+            <div className="p-3 mb-4 text-base text-center bg-rose-600 text-white  rounded-lg">
+              {error}
+            </div>
+          )}
           <div>
             <div className="space-y-4">
               <div>
