@@ -9,7 +9,7 @@ function QuizDiv() {
 
   const fetchQuiz = async () => {
     try {
-      const quizResponse = await AXIOS_API.get("api/v1/course/quiz/getAll");
+      const quizResponse = await AXIOS_API.get("/api/v1/course/quiz/getAll");
       if (quizResponse.status === 200) {
         console.log("got quiz");
 

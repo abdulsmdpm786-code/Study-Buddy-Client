@@ -47,7 +47,7 @@ function MainSection() {
   const getNotes = async () => {
     try {
       const contentResponse = await AXIOS_API.get(
-        `api/v1/course/content/${courseContent}/get`,
+        `/api/v1/course/content/${courseContent}/get`,
       );
       if (contentResponse.status === 200) {
         console.log("clear", contentResponse.data.content);
