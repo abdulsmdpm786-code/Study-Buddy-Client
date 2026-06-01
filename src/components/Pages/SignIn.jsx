@@ -3,17 +3,19 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import AXIOS_API from "../../Api/api";
+import { useAuth } from "../../Auth/AuthContext";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(false);
 
   const navigate = useNavigate();
 
+  const { setUser } = useAuth();
   const handleSignIn = async (e) => {
-    setIsLogin(true)
+    setIsLogin(true);
     try {
       console.log("Working....");
 
@@ -24,6 +26,7 @@ function SignIn() {
 
       if (responseUser.status === 200) {
         console.log("All Clear...", responseUser);
+        setUser(responseUser.data.findUser);
 
         setEmail("");
         setPassword("");
@@ -89,9 +92,7 @@ function SignIn() {
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-
-                </div>
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></div>
                 <input
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -105,22 +106,26 @@ function SignIn() {
                 />
               </div>
             </div>
-            {isLogin ? <button
-              type="button"
-              className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl 
+            {isLogin ? (
+              <button
+                type="button"
+                className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl 
             shadow-sm text-base font-medium text-white bg-indigo-300 
              transition-colors mt-4"
-            >
-              Loading...
-            </button>: <button
-              onClick={handleSignIn}
-              type="button"
-              className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl 
+              >
+                Loading...
+              </button>
+            ) : (
+              <button
+                onClick={handleSignIn}
+                type="button"
+                className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl 
             shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 
             focus:ring-offset-2 focus:ring-indigo-500 transition-colors mt-4"
-            >
-              sign in
-            </button>}
+              >
+                sign in
+              </button>
+            )}
           </form>
           <p className="mt-8 text-center text-sm text-slate-700">
             Don't have an account? {""}
