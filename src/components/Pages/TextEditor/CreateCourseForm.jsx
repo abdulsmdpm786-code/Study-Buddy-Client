@@ -135,7 +135,7 @@ export default function CreateCourseForm() {
                   style={{ animationDelay: `0.${i + 1}s` }}
                 >
                   <div className="flex gap-2 items-start mb-3">
-                    {/* <div
+                    <div
                       onClick={() => handleEdit(blog)}
                       className="flex items-center gap-1.5 text-xs font-medium text-slate-700/90 bg-white/60 px-2 
                     py-1 rounded-md shadow-sm border border-white/60 hover:text-indigo-800"
@@ -153,7 +153,7 @@ export default function CreateCourseForm() {
                           d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                         />
                       </svg>
-                    </div> */}
+                    </div>
                     <button
                       onClick={() => handleDelete(blog._id)}
                       className="text-slate-500 hover:text-red-800 transition-colors p-1 rounded-full
