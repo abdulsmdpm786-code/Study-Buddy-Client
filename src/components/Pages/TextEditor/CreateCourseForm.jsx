@@ -3,7 +3,7 @@ import TiptapEditor from "./TiptapEditor";
 import { useEffect } from "react";
 import AXIOS_API from "../../../Api/api";
 import DOMPurify from "dompurify";
-import EditModal from "./editModal";
+import EditModal from "./EditModal";
 import ReadArticleModal from "./ReadArticleModal";
 
 export default function CreateCourseForm() {

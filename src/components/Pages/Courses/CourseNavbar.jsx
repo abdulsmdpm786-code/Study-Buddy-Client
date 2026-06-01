@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaPlus, FaBars, FaXmark } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import AddModal from "./addModal";
+import AddModal from "./AddModal";
 import { useAuth } from "../../../Auth/AuthContext";
 
 function Navbar({onCategoryInput}) {
@@ -39,7 +39,6 @@ function Navbar({onCategoryInput}) {
             </div>
           )}
 
-          {/* Desktop Menu */}
           <div className="hidden lg:flex gap-8 items-center bg-white/40 px-6 py-2 rounded-full border border-white/50 shadow-inner">
             <div
               onClick={() => onCategoryInput("All")}
@@ -71,7 +70,6 @@ function Navbar({onCategoryInput}) {
             </div>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <button
             className="lg:hidden text-xl text-primary p-2.5 bg-white/60 hover:bg-white/80 rounded-full border border-white/50 shadow-sm transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
