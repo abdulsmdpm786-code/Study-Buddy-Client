@@ -18,7 +18,7 @@ function Navbar({onCategoryInput}) {
   return (
     <div>
       <div
-        className="w-full px-4 pt-4 flex justify-center sticky top-0 z-50 transition-all duration-500 animate-fadeInUp "
+        className="w-full px-4 pt-4 flex justify-center sticky top-0 z-20 transition-all duration-500 animate-fadeInUp "
         style={{
           animationDelay: "0.2s",
         }}
