@@ -9,6 +9,7 @@ import {
   FaFileSignature,
   FaXmark,
   FaArrowRightToBracket,
+  FaGripfire 
 } from "react-icons/fa6";
 import AXIOS_API from "../Api/api";
 import { useNavigate } from "react-router-dom";
@@ -58,8 +59,17 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           <span>Dashboard</span>
         </Link>
         <Link
+          to={"ai"}
+         className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300
+           hover:bg-white/60 hover:text-primary hover:translate-x-1"
+        >
+          <  FaGripfire className="text-lg min-w-[24px]" />
+          <span>Qalam AI</span>
+        </Link>
+        <Link
           to={"task"}
-          className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300 hover:bg-white/60 hover:text-primary hover:translate-x-1"
+          className="flex items-center px-5 py-3.5 gap-4 text-slate-500 font-semibold rounded-xl transition-all duration-300
+           hover:bg-white/60 hover:text-primary hover:translate-x-1"
         >
           <FaListCheck className="text-lg min-w-[24px]" />
           <span>Tasks</span>
