@@ -94,10 +94,10 @@ function MainSection() {
     setAddModal(true);
   };
 
-  const noteFilter = isContent.filter((n) => n.title.type === "note");
+  const noteFilter = isContent?.filter((n) => n?.title?.type === "note")|| [];
   console.log("notes...", noteFilter);
 
-  const reference = isContent.filter((n) => n.title.type === "ref");
+  const reference = isContent?.filter((n) => n?.title?.type === "ref")|| [];
   console.log("ref..", reference);
 
   return (
