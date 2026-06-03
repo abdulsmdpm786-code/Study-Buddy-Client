@@ -13,7 +13,7 @@ function QuizDiv() {
       if (quizResponse.status === 200) {
         console.log("got quiz");
 
-        setQuizData(quizResponse.data.Quiz);
+        setQuizData(quizResponse?.data?.Quiz);
       }
     } catch (error) {
       console.log(error);

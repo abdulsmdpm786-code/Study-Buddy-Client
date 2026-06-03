@@ -30,6 +30,7 @@ function SignUp() {
 
       setStep(2);
     } catch (error) {
+      console.error("Backend Error:", error.response?.data || error.message);
       setError(error.response?.data?.errMsg || "Registration failed");
     }
   };

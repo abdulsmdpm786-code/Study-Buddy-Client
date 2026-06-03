@@ -16,7 +16,7 @@ export default function QuizSection() {
   const handleFetch = async () => {
     try {
       const quizQuestions = await AXIOS_API.get(
-        `api/v1/course/quiz/${courseId}/find`,
+        `/api/v1/course/quiz/${courseId}/find`,
       );
 
       if (quizQuestions.status === 200) {
@@ -28,7 +28,7 @@ export default function QuizSection() {
     }
   };
 
-  // console.log("quiz content..", quizContent.length);
+  console.log("quiz content..", quizContent);
 
   useEffect(() => {
     handleFetch();
