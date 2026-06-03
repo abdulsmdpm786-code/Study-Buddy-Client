@@ -19,7 +19,7 @@ export default function QuizSection() {
         `/api/v1/course/quiz/${courseId}/find`,
       );
 
-      if (quizQuestions.status === 200) {
+      if (quizQuestions.status === 200) { 
         console.log("quiz questions.....", quizQuestions);
         setQuizContent(quizQuestions.data.Quiz[0].questions);
       }

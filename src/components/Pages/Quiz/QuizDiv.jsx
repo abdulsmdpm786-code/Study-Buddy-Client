@@ -2,6 +2,7 @@ import { ChevronRight, ExternalLink } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import AXIOS_API from "../../../Api/api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../Auth/AuthContext";
 
 function QuizDiv() {
   const [quizData, setQuizData] = useState([]);
@@ -44,6 +45,9 @@ function QuizDiv() {
     }
   };
 
+  const { user, isLoading } = useAuth();
+  const isAdmin = user?.role === "admin";
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full items-stretch">
       {quizData &&
@@ -66,7 +70,7 @@ function QuizDiv() {
                     Quiz Link
                   </span>
 
-                  <div className="flex gap-2">
+                 {isAdmin && <div className="flex gap-2">
                     <svg
                       onClick={() => handleDelete(data._id)}
                       className="w-4 h-4 text-slate-400 hover:text-rose-400 transition-colors"
@@ -82,7 +86,7 @@ function QuizDiv() {
                         4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                       />
                     </svg>
-                  </div>
+                  </div>}
                 </div>
 
                 <h3 className="font-bold text-sm text-white mb-1  transition-colors">

@@ -131,7 +131,7 @@ function MainSection() {
           </div>
         </div>
 
-        <div className="pt-2">
+        {isAdmin && <div className="pt-2">
           <button
             onClick={() => openAddModal()}
             className="px-6 py-2.5 rounded-lg border-2 bg-indigo-700 text-white font-medium
@@ -139,7 +139,7 @@ function MainSection() {
           >
             Add Note
           </button>
-        </div>
+        </div>}
       </section>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 ">
