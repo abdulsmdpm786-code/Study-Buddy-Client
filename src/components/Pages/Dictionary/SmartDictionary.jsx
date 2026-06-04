@@ -17,7 +17,7 @@ export default function SmartDictionary() {
 
     try {
       const response = await AXIOS_API.post(
-        `http://localhost:5000/api/v2/dictionary/get`,
+        `/api/v2/dictionary/get`,
         { word: searchTerm },
       );
       setIsSearching(false);
