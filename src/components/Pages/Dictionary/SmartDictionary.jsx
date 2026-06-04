@@ -11,15 +11,15 @@ export default function SmartDictionary() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    const word = searchTerm
     setError("");
     setSearchWord("");
     setIsSearching(true);
 
     try {
       const response = await AXIOS_API.post(
-        "/api/v2/dictionary/get/",
-        word
+        "/api/v2/dictionary/get",
+        {word : searchTerm}
+        
       );
       setIsSearching(false);
       if (response.status === 200) {
