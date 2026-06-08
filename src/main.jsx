@@ -16,7 +16,7 @@ import QuizSection from "./components/Pages/Quiz/QuizSection.jsx";
 import CreateCourseForm from "./components/Pages/TextEditor/CreateCourseForm.jsx";
 import TaskMain from "./components/Pages/Task/TaskMain.jsx";
 import DictionaryMain from "./components/Pages/Dictionary/DictionaryMain.jsx";
-import QalamAi from "./components/Pages/Qalam Ai/QalamAi.jsx";
+import AiDashboard from "./components/Pages/Qalam Ai/AiDashboard.jsx";
 
 
 const router = createBrowserRouter([
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
           },
           {
             path: "ai",
-            element: <QalamAi />,
+            element: <AiDashboard />,
           },
         ],
       },
