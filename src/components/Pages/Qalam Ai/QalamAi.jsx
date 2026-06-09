@@ -1,7 +1,7 @@
 import React from "react";
 import { Search } from "lucide-react";
 import { useState } from "react";
-import GeminiResultBox from "./geminiResult";
+import GeminiResultBox from "./GeminiResultBox";
 
 function QalamAi({ user, onSearchSubmit }) {
   const [inputValue, setInputValue] = useState("");

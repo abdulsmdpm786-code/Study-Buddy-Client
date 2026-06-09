@@ -29,7 +29,7 @@ export default function GeminiResultBox({ isLoading, resultText }) {
                 Qalam AI Engine
               </span>
             </div>
-
+ 
             {!isLoading && resultText && (
            
              

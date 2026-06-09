@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import QalamAi from "./QalamAi";
-import GeminiResultBox from "./geminiResult";
+import GeminiResultBox from "./GeminiResultBox";
 import { useAuth } from "../../../Auth/AuthContext";
 
 export default function AiDashboard() {
