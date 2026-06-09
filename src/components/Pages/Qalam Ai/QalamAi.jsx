@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import GeminiResultBox from "./geminiResult";
 
-function QalamAi({user, onSearchSubmit}) {
+function QalamAi({ user, onSearchSubmit }) {
   const [inputValue, setInputValue] = useState("");
 
   const handleKeyDown = (e) => {
@@ -16,14 +16,13 @@ function QalamAi({user, onSearchSubmit}) {
   const handleSearch = () => {
     if (!inputValue.trim()) return;
     onSearchSubmit(inputValue);
+    setInputValue("");
   };
-  console.log("input in qlam..",inputValue);
-  
 
   return (
     <div>
       <div
-        className="flex items-center flex-col justify-between text-sm text-gray-800 max-md:px-4 text-center py-20
+        className="flex items-center flex-col justify-between text-sm text-gray-800 max-md:px-4 text-center
        transition-all duration-500 animate-fadeInUp group"
       >
         <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto">
@@ -40,7 +39,7 @@ function QalamAi({user, onSearchSubmit}) {
           </div>
 
           <div
-            className="w-full relative group/input p-[1px] rounded-2xl bg-gradient-to-r from-slate-800 via-slate-700
+            className="w-full  relative group/input p-[1px] rounded-2xl bg-gradient-to-r from-slate-800 via-slate-700
            to-slate-800 focus-within:from-blue-500 focus-within:via-indigo-500 focus-within:to-purple-500 transition-all 
            duration-500 shadow-xl focus-within:shadow-[0_0_25px_rgba(99,102,241,0.2)]"
           >
@@ -50,7 +49,8 @@ function QalamAi({user, onSearchSubmit}) {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 rows={2}
-                className="w-full resize-none outline-none bg-transparent text-slate-100 placeholder-slate-500 text-base leading-relaxed pr-12 transition-colors"
+                className="w-full resize-none outline-none bg-transparent text-slate-100 placeholder-slate-500 text-base 
+                leading-relaxed pr-12 transition-colors"
                 placeholder="What do you want to learn?..."
               />
 
@@ -71,7 +71,6 @@ function QalamAi({user, onSearchSubmit}) {
             </div>
           </div>
         </div>
-        
       </div>
       <GeminiResultBox />
     </div>
