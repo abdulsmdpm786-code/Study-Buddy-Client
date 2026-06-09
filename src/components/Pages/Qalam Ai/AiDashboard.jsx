@@ -3,6 +3,7 @@ import axios from "axios";
 import QalamAi from "./QalamAi";
 import GeminiResultBox from "./GeminiResultBox";
 import { useAuth } from "../../../Auth/AuthContext";
+import AXIOS_API from "../../../Api/api";
 
 export default function AiDashboard() {
   const { user, isLoading } = useAuth();
@@ -18,7 +19,7 @@ export default function AiDashboard() {
     setAiResult("");
 
     try {
-      const response = await axios.post("/api/v3/gemini/chat", {
+      const response = await AXIOS_API.post("/api/v3/gemini/chat", {
         message: queryText,
       });
 
