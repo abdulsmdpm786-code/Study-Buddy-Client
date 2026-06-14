@@ -7,9 +7,11 @@ import {
   CheckCircle2,
   CircleDashed,
   Loader2,
-  Pencil ,
-  Trash 
+  Pencil,
+  Trash,
 } from "lucide-react";
+import EditModal from "./EditModal";
+import AXIOS_API from "../../../Api/api";
 
 // --- Initial Data ---
 const initialTasks = [
@@ -57,14 +59,13 @@ const getProgressDisplay = (progress) => {
   return { icon: Loader2, color: "text-emerald-500" };
 };
 
+console.log("now date", new Date().toDateString());
+
 export default function TaskBoard({ note }) {
   const [tasks, setTasks] = useState(initialTasks);
   const [draggedTaskId, setDraggedTaskId] = useState(null);
-
-  console.log("notes..", note);
-  const PlannedTest = note.filter((data) => data.isCompleted === "Planned");
-  const inProgress = note.filter((data) => data.isCompleted === "InProgress");
-  const Done = note.filter((data) => data.isCompleted === "Done");
+  const [modal, setModal] = useState(false);
+  const [data, setData] = useState("");
 
   // --- Drag & Drop Handlers ---
   const handleDragStart = (e, id) => {
@@ -94,11 +95,29 @@ export default function TaskBoard({ note }) {
     }
   };
 
+  const handleEdit = (data) => {
+    setModal(true);
+    setData(data);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await AXIOS_API.delete(`/api/v4/todoNote/${id}`);
+      if (response.status === 200) {
+        window.location.reload();
+      }
+    } catch (error) {
+      setError(error.response?.data?.errMsg || "Course Adding Failed");
+    }
+  };
+
   return (
     <div className="min-h-screen  overflow-x-auto">
       <div className="flex items-start  gap-6 w-max">
         {COLUMNS.map((column, i) => {
-          const columnTasks = note.filter((task) => task.isCompleted === column.id);
+          const columnTasks = note.filter(
+            (task) => task.isCompleted === column.id,
+          );
           const ColumnIcon = column.icon;
 
           return (
@@ -114,7 +133,6 @@ export default function TaskBoard({ note }) {
                 animationDelay: `0.${i++}s`,
               }}
             >
-              {/* Column Header */}
               <div className="flex justify-between items-center mb-4 px-1 text-gray-700 ">
                 <div className="flex items-center gap-2">
                   <ColumnIcon className="w-[18px] h-[18px] text-gray-500" />
@@ -132,7 +150,7 @@ export default function TaskBoard({ note }) {
 
                   return (
                     <div
-                      key={task.id}
+                      key={i}
                       draggable
                       onDragStart={(e) => handleDragStart(e, task.id)}
                       onDragEnd={handleDragEnd}
@@ -155,9 +173,9 @@ export default function TaskBoard({ note }) {
                       </div>
 
                       <div className="flex justify-between items-center text-[11px] font-medium">
-                        <div className="flex items-center gap-1.5 text-gray-500">
+                        <div className="flex items-center gap-1.5 text-indigo-500">
                           <CalendarDays className="w-3.5 h-3.5" />
-                          <span>{task.date}</span>
+                          <span className="font-bold">{task.date}</span>
                         </div>
                         <div
                           className={`flex items-center gap-1 ${progressColor}`}
@@ -169,13 +187,17 @@ export default function TaskBoard({ note }) {
 
                       <div className="flex justify-between items-center pt-1">
                         <div className="flex items-center gap-3 text-xs text-gray-400 font-medium">
-                          <div className="flex items-center gap-1 hover:text-indigo-600 cursor-default transition-colors">
-                            <Pencil  className="w-3.5 h-3.5" />
-                            
+                          <div
+                            onClick={() => handleEdit(task)}
+                            className="flex items-center gap-1 hover:text-indigo-600 cursor-default transition-colors"
+                          >
+                            <Pencil className="w-3.5 h-3.5" />
                           </div>
-                          <div className="flex items-center gap-1 hover:text-rose-900 cursor-default transition-colors">
-                            <Trash  className="w-3.5 h-3.5" />
-                           
+                          <div
+                            onClick={() => handleDelete(task._id)}
+                            className="flex items-center gap-1 hover:text-rose-900 cursor-default transition-colors"
+                          >
+                            <Trash className="w-3.5 h-3.5" />
                           </div>
                         </div>
                       </div>
@@ -187,6 +209,7 @@ export default function TaskBoard({ note }) {
           );
         })}
       </div>
+      {modal && <EditModal onClose={() => setModal(false)} data={data} />}
     </div>
   );
 }
