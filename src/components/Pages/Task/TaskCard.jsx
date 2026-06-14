@@ -1,87 +1,82 @@
 import React, { useState } from "react";
 import {
-  ListTodo,
-  Clock,
-  CheckCircle,
   Plus,
-  Briefcase,
-  MapPin,
-  Calendar,
-  GripVertical,
+  Paperclip,
+  MessageSquare,
+  CalendarDays,
+  CheckCircle2,
+  CircleDashed,
+  Loader2,
+  Pencil ,
+  Trash 
 } from "lucide-react";
-const initialJobs = [
-  {
-    id: "1",
-    company: "LINEAR",
-    role: "Lead Full-Stack Developer",
-    status: "To Do",
-    location: "Remote (Worldwide)",
-    date: "2026-06-08",
-  },
-  {
-    id: "2",
-    company: "VERCEL",
-    role: "Senior Frontend Developer",
-    status: "Ongoing",
-    location: "Remote (US)",
-    date: "2026-06-10",
-  },
-  {
-    id: "3",
-    company: "MONGODB INC.",
-    role: "Full-Stack Developer",
-    status: "Completed",
-    location: "New York, NY",
-    date: "2026-06-12",
-  },
-  {
-    id: "4",
-    company: "STRIPE",
-    role: "Software Engineer",
-    status: "Completed",
-    location: "Remote",
-    date: "2026-06-01",
-  },
-];
+
+// --- Initial Data ---
+const initialTasks = [
+  { id: "1", status: "Planned", progress: 0 },
+  { id: "2", status: "Planned", progress: 0 },
+  { id: "3", status: "In Progress", progress: 50 },
+  { id: "4", status: "In Progress", progress: 80 },
+  { id: "5", status: "In Progress", progress: 75 },
+  { id: "6", status: "Done", progress: 100 },
+  { id: "7", status: "On Hold", progress: 50 },
+  { id: "8", status: "On Hold", progress: 80 },
+  { id: "9", status: "On Hold", progress: 75 },
+].map((task) => ({
+  ...task,
+  // Shared dummy data to match the screenshot
+  title: "Research landing page trends.",
+  description: "Compile competitor landing page designs for inspiration. G...",
+  date: "12 Nov",
+  comments: 2,
+  attachments: 2,
+  avatars: [
+    "https://i.pravatar.cc/150?u=1",
+    "https://i.pravatar.cc/150?u=2",
+    "https://i.pravatar.cc/150?u=3",
+  ],
+}));
 
 const COLUMNS = [
-  {
-    id: "To Do",
-    title: "To Do",
-    color: "border-purple-400",
-    text: "text-purple-400",
-    iconText: "text-purple-600",
-    bg: "bg-purple-500",
-    icon: ListTodo,
-  },
-  {
-    id: "Ongoing",
-    title: "Ongoing",
-    color: "border-blue-400",
-    text: "text-blue-400",
-    iconText: "text-blue-600",
-    bg: "bg-blue-500",
-    icon: Clock,
-  },
-  {
-    id: "Completed",
-    title: "Completed",
-    color: "border-green-400",
-    text: "text-green-400",
-    iconText: "text-green-600",
-    bg: "bg-green-500",
-    icon: CheckCircle,
-  },
+  { id: "Planned", title: "Planned", icon: CircleDashed },
+  { id: "InProgress", title: "In Progress", icon: Loader2 },
+  { id: "Done", title: "Done", icon: CheckCircle2 },
 ];
 
-function TaskCard() {
-  const [jobs, setJobs] = useState(initialJobs);
-  const [draggedJobId, setDraggedJobId] = useState(null);
+// --- Helper Functions ---
+const getProgressDisplay = (progress) => {
+  if (progress === 0) {
+    return { icon: CircleDashed, color: "text-gray-400" };
+  }
+  if (progress === 100) {
+    return { icon: CheckCircle2, color: "text-emerald-500" };
+  }
+  if (progress < 75) {
+    return { icon: Loader2, color: "text-amber-500" };
+  }
+  return { icon: Loader2, color: "text-emerald-500" };
+};
+
+export default function TaskBoard({ note }) {
+  const [tasks, setTasks] = useState(initialTasks);
+  const [draggedTaskId, setDraggedTaskId] = useState(null);
+
+  console.log("notes..", note);
+  const PlannedTest = note.filter((data) => data.isCompleted === "Planned");
+  const inProgress = note.filter((data) => data.isCompleted === "InProgress");
+  const Done = note.filter((data) => data.isCompleted === "Done");
 
   // --- Drag & Drop Handlers ---
   const handleDragStart = (e, id) => {
-    setDraggedJobId(id);
+    setDraggedTaskId(id);
     e.dataTransfer.effectAllowed = "move";
+    // Optional: Make the drag ghost slightly transparent
+    e.currentTarget.style.opacity = "0.5";
+  };
+
+  const handleDragEnd = (e) => {
+    e.currentTarget.style.opacity = "1";
+    setDraggedTaskId(null);
   };
 
   const handleDragOver = (e) => {
@@ -90,113 +85,108 @@ function TaskCard() {
 
   const handleDrop = (e, status) => {
     e.preventDefault();
-    if (draggedJobId) {
-      setJobs((prev) =>
-        prev.map((job) => (job.id === draggedJobId ? { ...job, status } : job)),
+    if (draggedTaskId) {
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === draggedTaskId ? { ...task, status } : task,
+        ),
       );
-      setDraggedJobId(null);
     }
   };
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {COLUMNS.map((column) => {
-        const columnJobs = jobs.filter((job) => job.status === column.id);
-        const ColumnIcon = column.icon;
+    <div className="min-h-screen  overflow-x-auto">
+      <div className="flex items-start  gap-6 w-max">
+        {COLUMNS.map((column, i) => {
+          const columnTasks = note.filter((task) => task.isCompleted === column.id);
+          const ColumnIcon = column.icon;
 
-        return (
-          <div
-            key={column.id}
-            onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, column.id)}
-            className={`bg-white/20 backdrop-blur-xl border-2 border-white/40 rounded-3xl p-6 flex flex-col 
-                   relative group overflow-hidden shadow-xl min-h-[60vh] transition-all duration-500 
-                          animate-fadeInUp`}
-            style={{
-              animationDelay: `0.2s`,
-            }}
-          >
+          return (
             <div
-              className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-current to-transparent opacity-60 ${column.iconText}`}
-            />
-
-            <div className="flex justify-between items-center mb-8 relative z-10">
-              <div className="flex items-center gap-3">
-                <ColumnIcon
-                  size={24}
-                  className={`${column.iconText} drop-shadow-sm`}
-                />
-                <h3 className="font-extrabold text-xl text-slate-800 drop-shadow-sm">
-                  {column.title}
-                </h3>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="w-7 h-7 rounded-full bg-white/50 backdrop-blur-md flex items-center justify-center text-sm font-bold text-slate-700 shadow-sm">
-                  {columnJobs.length}
-                </span>
-                <button className="text-slate-500 hover:text-slate-800 transition-colors hover:bg-white/40 p-2 rounded-full shadow-sm">
-                  <Plus size={18} />
+              key={column.id}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, column.id)}
+              className="flex flex-col flex-shrink-0 w-80 bg-gray-50/60 rounded-2xl p-3 border border-gray-100
+                transition-all duration-500
+         animate-fadeInUp 
+                        `"
+              style={{
+                animationDelay: `0.${i++}s`,
+              }}
+            >
+              {/* Column Header */}
+              <div className="flex justify-between items-center mb-4 px-1 text-gray-700 ">
+                <div className="flex items-center gap-2">
+                  <ColumnIcon className="w-[18px] h-[18px] text-gray-500" />
+                  <h3 className="text-sm font-medium">{column.title}</h3>
+                </div>
+                <button className="text-gray-400 hover:text-gray-700 transition-colors p-1 hover:bg-gray-200 rounded-md">
+                  <Plus className="w-4 h-4" />
                 </button>
               </div>
-            </div>
 
-            <div className="flex-1 flex flex-col gap-5 relative z-10">
-              {columnJobs.length > 0 ? (
-                columnJobs.map((job, i) => (
-                  <div
-                    key={job.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, job.id)}
-                    className={`bg-[#2A2B38] rounded-2xl p-6 border border-slate-600/50 cursor-grab 
-                          active:cursor-grabbing hover:border-slate-500 hover:bg-[#323342] transition-all duration-500 
-                          animate-fadeInUp shadow-lg group/card relative`}
-                    style={{
-                      animationDelay: `0.${i++}s`,
-                    }}
-                  >
-                    <GripVertical
-                      size={18}
-                      className="absolute top-5 right-5 text-slate-500 opacity-0 group-hover/card:opacity-100 transition-opacity"
-                    />
+              <div className="flex flex-col gap-3 min-h-[150px]">
+                {columnTasks.map((task, i) => {
+                  const { icon: ProgressIcon, color: progressColor } =
+                    getProgressDisplay(task.progress);
 
-                    <p
-                      className={`text-xs font-bold ${column.text} uppercase tracking-wider mb-2 flex items-center gap-2`}
+                  return (
+                    <div
+                      key={task.id}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, task.id)}
+                      onDragEnd={handleDragEnd}
+                      className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col gap-4 cursor-grab
+                       active:cursor-grabbing hover:shadow-md hover:border-gray-300 
+                       transition-all  duration-500
+         animate-fadeInUp 
+                        `"
+                      style={{
+                        animationDelay: `0.${i++}s`,
+                      }}
                     >
-                      {job.company}
-                    </p>
-
-                    <h4 className="text-[17px] font-semibold leading-snug text-white pr-6 mb-5">
-                      {job.role}
-                    </h4>
-
-                    <div className="space-y-3 text-xs text-slate-400 font-medium">
-                      <div className="flex items-center gap-2.5">
-                        <MapPin size={14} className="text-slate-500" />
-                        <span>{job.location}</span>
+                      <div>
+                        <h4 className="text-[13px] font-semibold text-gray-900 leading-snug">
+                          {task.title}
+                        </h4>
+                        <p className="text-[11px] text-gray-400 mt-1.5 leading-relaxed line-clamp-2">
+                          {task.description}
+                        </p>
                       </div>
-                      <div className="flex items-center gap-2.5">
-                        <Calendar size={14} className="text-slate-500" />
-                        <span>Tracked: {job.date}</span>
+
+                      <div className="flex justify-between items-center text-[11px] font-medium">
+                        <div className="flex items-center gap-1.5 text-gray-500">
+                          <CalendarDays className="w-3.5 h-3.5" />
+                          <span>{task.date}</span>
+                        </div>
+                        <div
+                          className={`flex items-center gap-1 ${progressColor}`}
+                        >
+                          <ProgressIcon className="w-3.5 h-3.5" />
+                          <span>{task.progress}%</span>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center pt-1">
+                        <div className="flex items-center gap-3 text-xs text-gray-400 font-medium">
+                          <div className="flex items-center gap-1 hover:text-indigo-600 cursor-default transition-colors">
+                            <Pencil  className="w-3.5 h-3.5" />
+                            
+                          </div>
+                          <div className="flex items-center gap-1 hover:text-rose-900 cursor-default transition-colors">
+                            <Trash  className="w-3.5 h-3.5" />
+                           
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <div className="border-2 border-dashed border-white/40 bg-white/10 rounded-2xl h-40 flex flex-col items-center justify-center text-slate-500 transition-colors group-hover:border-white/60 group-hover:bg-white/20 shadow-inner">
-                  <Briefcase
-                    size={28}
-                    className="mb-3 opacity-40 text-slate-600"
-                  />
-                  <span className="text-sm font-bold text-slate-600">
-                    Drop here
-                  </span>
-                </div>
-              )}
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
-
-export default TaskCard;

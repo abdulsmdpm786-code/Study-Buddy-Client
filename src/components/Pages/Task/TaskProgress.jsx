@@ -86,15 +86,18 @@ function TaskProgress() {
         >
           <div className="relative z-10 flex flex-col">
             <h2
-              className="text-5xl font-extrabold tracking-tight text-indigo-800 
+              className="text-5xl font-extrabold tracking-tight text-black
                 "
             >
               {item.value}
             </h2>
-            <p className="mt-3 text-sm font-extrabold text-black tracking-widest uppercase drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">
+            <p
+              className="mt-3 text-sm font-semibold text-indigo-800 tracking-widest uppercase 
+            "
+            >
               {item.title}
             </p>
-            <p className="mt-1 text-xs text-black font-medium drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
+            <p className="mt-1 text-xs text-indigo-800 font-medium ">
               {item.subtitle}
             </p>
           </div>
