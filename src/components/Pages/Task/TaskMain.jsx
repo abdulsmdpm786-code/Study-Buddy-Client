@@ -45,9 +45,9 @@ export default function JobTrackerDashboard() {
           </button>
         </div>
 
-        <TaskCard note={notes} />
+        <TaskCard note={notes} fetch={fetchNotes()}/>
       </div>
-      {modal && <AddModal onClose={()=> setModal(false)}/>}
+      {modal && <AddModal onClose={()=> setModal(false)} fetch={fetchNotes()}/>}
     </div>
   );
 }

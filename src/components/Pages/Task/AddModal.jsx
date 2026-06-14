@@ -1,28 +1,21 @@
 import React, { useState } from "react";
 import AXIOS_API from "../../../Api/api";
 
-function AddModal({ onClose }) {
+function AddModal({ onClose, fetch }) {
   const [mainTitle, setMainTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
-
 
   const handleSubmit = async () => {
     const addData = {
       title: mainTitle,
       description: content,
-      date: new Date().toDateString()
+      date: new Date().toDateString(),
     };
-    
-    try {
-      const addResponse = await AXIOS_API.post(
-        "/api/v4/todoNote/add",
-        addData,
-      );
 
-      if (addResponse.status === 200) {
-        window.location.reload();
-      }
+    try {
+      const addResponse = await AXIOS_API.post("/api/v4/todoNote/add", addData);
+      onClose()
     } catch (error) {
       setError(error.response?.data?.errMsg || "Adding failed");
     }

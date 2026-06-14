@@ -15,12 +15,12 @@ function EditModal({ onClose, data }) {
     };
     
     try {
-      const addResponse = await AXIOS_API.put(
+      const editResponse = await AXIOS_API.put(
         `/api/v4/todoNote/${data._id}`,
         editData,
       );
 
-      if (addResponse.status === 200) {
+      if (editResponse.status === 200) {
         window.location.reload();
       }
     } catch (error) {

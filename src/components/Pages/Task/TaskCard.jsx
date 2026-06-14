@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import EditModal from "./EditModal";
 import AXIOS_API from "../../../Api/api";
+import DropDown from "./DropDown";
 
 // --- Initial Data ---
 const initialTasks = [
@@ -61,7 +62,7 @@ const getProgressDisplay = (progress) => {
 
 console.log("now date", new Date().toDateString());
 
-export default function TaskBoard({ note }) {
+export default function TaskBoard({ note, fetch }) {
   const [tasks, setTasks] = useState(initialTasks);
   const [draggedTaskId, setDraggedTaskId] = useState(null);
   const [modal, setModal] = useState(false);
@@ -104,7 +105,7 @@ export default function TaskBoard({ note }) {
     try {
       const response = await AXIOS_API.delete(`/api/v4/todoNote/${id}`);
       if (response.status === 200) {
-        window.location.reload();
+        fetch()
       }
     } catch (error) {
       setError(error.response?.data?.errMsg || "Course Adding Failed");
@@ -138,9 +139,6 @@ export default function TaskBoard({ note }) {
                   <ColumnIcon className="w-[18px] h-[18px] text-gray-500" />
                   <h3 className="text-sm font-medium">{column.title}</h3>
                 </div>
-                <button className="text-gray-400 hover:text-gray-700 transition-colors p-1 hover:bg-gray-200 rounded-md">
-                  <Plus className="w-4 h-4" />
-                </button>
               </div>
 
               <div className="flex flex-col gap-3 min-h-[150px]">
@@ -167,7 +165,7 @@ export default function TaskBoard({ note }) {
                         <h4 className="text-[13px] font-semibold text-gray-900 leading-snug">
                           {task.title}
                         </h4>
-                        <p className="text-[11px] text-gray-400 mt-1.5 leading-relaxed line-clamp-2">
+                        <p className="text-[11px] text-gray-500 mt-1.5 leading-relaxed line-clamp-3">
                           {task.description}
                         </p>
                       </div>
@@ -185,8 +183,8 @@ export default function TaskBoard({ note }) {
                         </div>
                       </div>
 
-                      <div className="flex justify-between items-center pt-1">
-                        <div className="flex items-center gap-3 text-xs text-gray-400 font-medium">
+                      <div className="flex justify-end  pt-1">
+                        <div className="flex justify-end gap-3 text-xs text-gray-400 font-medium">
                           <div
                             onClick={() => handleEdit(task)}
                             className="flex items-center gap-1 hover:text-indigo-600 cursor-default transition-colors"
@@ -201,6 +199,7 @@ export default function TaskBoard({ note }) {
                           </div>
                         </div>
                       </div>
+                      <DropDown id={task._id} fetch={fetch}/>
                     </div>
                   );
                 })}
