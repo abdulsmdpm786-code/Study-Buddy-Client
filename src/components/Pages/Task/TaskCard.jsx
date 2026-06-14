@@ -14,31 +14,7 @@ import EditModal from "./EditModal";
 import AXIOS_API from "../../../Api/api";
 import DropDown from "./DropDown";
 
-// --- Initial Data ---
-const initialTasks = [
-  { id: "1", status: "Planned", progress: 0 },
-  { id: "2", status: "Planned", progress: 0 },
-  { id: "3", status: "In Progress", progress: 50 },
-  { id: "4", status: "In Progress", progress: 80 },
-  { id: "5", status: "In Progress", progress: 75 },
-  { id: "6", status: "Done", progress: 100 },
-  { id: "7", status: "On Hold", progress: 50 },
-  { id: "8", status: "On Hold", progress: 80 },
-  { id: "9", status: "On Hold", progress: 75 },
-].map((task) => ({
-  ...task,
-  // Shared dummy data to match the screenshot
-  title: "Research landing page trends.",
-  description: "Compile competitor landing page designs for inspiration. G...",
-  date: "12 Nov",
-  comments: 2,
-  attachments: 2,
-  avatars: [
-    "https://i.pravatar.cc/150?u=1",
-    "https://i.pravatar.cc/150?u=2",
-    "https://i.pravatar.cc/150?u=3",
-  ],
-}));
+
 
 const COLUMNS = [
   { id: "Planned", title: "Planned", icon: CircleDashed },
@@ -46,24 +22,10 @@ const COLUMNS = [
   { id: "Done", title: "Done", icon: CheckCircle2 },
 ];
 
-// --- Helper Functions ---
-const getProgressDisplay = (progress) => {
-  if (progress === 0) {
-    return { icon: CircleDashed, color: "text-gray-400" };
-  }
-  if (progress === 100) {
-    return { icon: CheckCircle2, color: "text-emerald-500" };
-  }
-  if (progress < 75) {
-    return { icon: Loader2, color: "text-amber-500" };
-  }
-  return { icon: Loader2, color: "text-emerald-500" };
-};
 
-console.log("now date", new Date().toDateString());
 
 export default function TaskBoard({ note, fetch }) {
-  const [tasks, setTasks] = useState(initialTasks);
+
   const [draggedTaskId, setDraggedTaskId] = useState(null);
   const [modal, setModal] = useState(false);
   const [data, setData] = useState("");
@@ -143,8 +105,7 @@ export default function TaskBoard({ note, fetch }) {
 
               <div className="flex flex-col gap-3 min-h-[150px]">
                 {columnTasks.map((task, i) => {
-                  const { icon: ProgressIcon, color: progressColor } =
-                    getProgressDisplay(task.progress);
+                 
 
                   return (
                     <div
@@ -175,12 +136,7 @@ export default function TaskBoard({ note, fetch }) {
                           <CalendarDays className="w-3.5 h-3.5" />
                           <span className="font-bold">{task.date}</span>
                         </div>
-                        <div
-                          className={`flex items-center gap-1 ${progressColor}`}
-                        >
-                          <ProgressIcon className="w-3.5 h-3.5" />
-                          <span>{task.progress}%</span>
-                        </div>
+                    
                       </div>
 
                       <div className="flex justify-end  pt-1">

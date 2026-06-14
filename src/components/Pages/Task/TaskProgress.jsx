@@ -1,48 +1,12 @@
 import React, { useState } from "react";
-const initialJobs = [
-  {
-    id: "1",
-    company: "LINEAR",
-    role: "Lead Full-Stack Developer",
-    status: "To Do",
-    location: "Remote (Worldwide)",
-    date: "2026-06-08",
-  },
-  {
-    id: "2",
-    company: "VERCEL",
-    role: "Senior Frontend Developer",
-    status: "Ongoing",
-    location: "Remote (US)",
-    date: "2026-06-10",
-  },
-  {
-    id: "3",
-    company: "MONGODB INC.",
-    role: "Full-Stack Developer",
-    status: "Completed",
-    location: "New York, NY",
-    date: "2026-06-12",
-  },
-  {
-    id: "4",
-    company: "STRIPE",
-    role: "Software Engineer",
-    status: "Completed",
-    location: "Remote",
-    date: "2026-06-01",
-  },
-];
 
-function TaskProgress() {
-  const [jobs, setJobs] = useState(initialJobs);
 
-  //   --- Dynamic Stat Calculations ---
-  const getCount = (status) => jobs.filter((j) => j.status === status).length;
+function TaskProgress({ note }) {
 
-  const totalListings = jobs.length;
-  const activeApplications = getCount("Ongoing");
-  const completedProcesses = getCount("Completed");
+
+  const totalListings = note.length;
+  const activeApplications = note.filter((j) => j.isCompleted === "InProgress").length;
+  const completedProcesses = note.filter((j) => j.isCompleted === "Done").length;
   const completionRate =
     totalListings > 0
       ? Math.round((completedProcesses / totalListings) * 100)
@@ -50,17 +14,17 @@ function TaskProgress() {
 
   const topStats = [
     {
-      value: totalListings.toString(),
+      value: totalListings,
       title: "TOTAL TRACKED",
       subtitle: "All saved opportunities",
     },
     {
-      value: activeApplications.toString(),
+      value: activeApplications,
       title: "ONGOING",
       subtitle: "Currently in progress",
     },
     {
-      value: completedProcesses.toString(),
+      value: completedProcesses,
       title: "COMPLETED",
       subtitle: "Finished processes",
     },

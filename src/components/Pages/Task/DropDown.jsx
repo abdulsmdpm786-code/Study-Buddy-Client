@@ -47,12 +47,12 @@ console.log("...",id);
       <button
         onClick={() => setIsOpen(!isOpen)}
         type="button"
-        className="inline-flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium text-slate-200
+        className="inline-flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium text-slate-100
          bg-slate-900/50 hover:bg-slate-900/80 border  rounded-xl backdrop-blur-md shadow-lg 
          transition-all duration-200 focus:outline-none
          active:scale-95"
       >
-        <span className="flex items-center gap-2">Move to stage</span>
+        <span className="flex items-center gap-2 font-medium">Move to stage</span>
         <svg
           className={`w-4 h-4 ml-2 transition-transform duration-200 text-slate-400 ${
             isOpen ? "rotate-180 text-indigo-400" : ""

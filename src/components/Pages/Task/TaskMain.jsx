@@ -28,10 +28,10 @@ export default function JobTrackerDashboard() {
   return (
     <div className="relative min-h-screen  p-3 font-sans overflow-hidden text-slate-800">
       <div className="relative z-10 max-w-screen-2xl mx-auto space-y-10">
-        <TaskProgress />
+        <TaskProgress note={notes} />
         <div>
           <button
-          onClick={()=> setModal(true)}
+            onClick={() => setModal(true)}
             className="bg-indigo-700 px-6 py-2 rounded-lg  text-white flex justify-center items-center gap-2
           hover:bg-indigo-800 transition-all duration-500
          animate-fadeInUp 
@@ -45,9 +45,11 @@ export default function JobTrackerDashboard() {
           </button>
         </div>
 
-        <TaskCard note={notes} fetch={fetchNotes()}/>
+        <TaskCard note={notes} fetch={fetchNotes} />
       </div>
-      {modal && <AddModal onClose={()=> setModal(false)} fetch={fetchNotes()}/>}
+      {modal && (
+        <AddModal onClose={() => setModal(false)} fetch={fetchNotes()} />
+      )}
     </div>
   );
 }
