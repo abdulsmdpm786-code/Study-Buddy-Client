@@ -76,7 +76,7 @@ export default function TaskBoard({ note, fetch }) {
 
   return (
     <div className="min-h-screen  overflow-x-auto">
-      <div className="flex items-start  gap-6 w-max">
+      <div className="flex items-start gap-1 lg:gap-6 w-max">
         {COLUMNS.map((column, i) => {
           const columnTasks = note.filter(
             (task) => task.isCompleted === column.id,
